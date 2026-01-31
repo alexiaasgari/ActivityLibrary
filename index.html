@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Activity Library</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- FullCalendar (calendar UI) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand__row">
+        <div class="brand__title">Activity Library</div>
+        <div id="syncChip" class="sync-chip" title="Storage status">Local</div>
+      </div>
+      <div class="brand__subtitle">Activities + events you actually want to do</div>
+    </div>
+
+    <div class="header-actions">
+      <button id="btnViewCalendar" class="btn btn--primary" type="button">Calendar</button>
+      <button id="btnViewList" class="btn" type="button">List</button>
+      <button id="btnOpenHelp" class="btn" type="button">Instructions</button>
+      <button id="btnOpenSettings" class="btn" type="button">Settings</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <div class="panel__title-row">
+          <h2 class="panel__title">Filters</h2>
+          <button id="btnClearFilters" class="linkbtn" type="button">Clear</button>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Search</span>
+          <input id="filterText" class="input" type="text" placeholder="title, notes, address…" />
+        </label>
+
+        <div class="quick-row">
+          <label class="checkbox checkbox--inline">
+            <input id="filterStarredOnly" type="checkbox" />
+            <span>Top picks</span>
+          </label>
+
+          <label class="checkbox checkbox--inline">
+            <input id="filterHideDone" type="checkbox" />
+            <span>Hide done</span>
+          </label>
+
+          <label class="checkbox checkbox--inline">
+            <input id="filterIncludeUnscheduled" type="checkbox" checked />
+            <span>Include unscheduled</span>
+          </label>
+
+          <label class="checkbox checkbox--inline">
+            <input id="filterHideRecurring" type="checkbox" checked />
+            <span>Include recurring</span>
+          </label>
+        </div>
+
+        <label class="field">
+  <span class="field__label">Price</span>
+  <select id="filterPriceTier" class="input">
+    <option value="all" selected>All prices</option>
+    <option value="free">Free</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+</label>
+
+
+        <details open>
+          <summary class="details-summary">Categories</summary>
+          <div id="filterTypes" class="pillbox"></div>
+          <div class="helptext">Tip: the colors match the calendar.</div>
+        </details>
+
+        <details>
+          <summary class="details-summary">Neighborhoods</summary>
+          <div id="filterNeighborhoodTree" class="tree"></div>
+          <div class="helptext">Select a borough, region, or neighborhood.</div>
+        </details>
+
+        <details>
+          <summary class="details-summary">Calendar layers</summary>
+          <div id="filterLayers" class="stack"></div>
+          <div class="helptext">Use layers for overlays like museum free hours.</div>
+        </details>
+
+        <div class="divider"></div>
+        <div class="row">
+          <button id="btnApplyFilters" class="btn btn--primary" type="button">Refresh</button>
+        </div>
+      </section>
+    </aside>
+
+    <main class="main">
+      <section id="calendarView" class="view">
+        <div class="calendar-top">
+          <div id="earlyStrip" class="early-strip" hidden></div>
+        </div>
+        <div id="calendar" class="calendar"></div>
+        <div id="calendarFallback" class="fallback" hidden>
+          <h3>Calendar library not available</h3>
+          <p>
+            The calendar view relies on FullCalendar, loaded from a CDN. If you are offline, or blocking CDNs,
+            the list view will still work.
+          </p>
+        </div>
+      </section>
+
+      <section id="listView" class="view" hidden>
+        <div class="list-toolbar">
+          <div class="list-toolbar__row">
+            <div class="list-toolbar__left">
+<div class="tabs" role="tablist" aria-label="List tabs">
+  <button id="tabListActive" class="tab is-active" type="button" role="tab" aria-selected="true">Active</button>
+  <button id="tabListArchive" class="tab" type="button" role="tab" aria-selected="false">Archive</button>
+</div>
+
+              <label class="field field--inline">
+                <span class="field__label">From</span>
+                <input id="filterDateFrom" class="input" type="date" />
+              </label>
+              <label class="field field--inline">
+                <span class="field__label">To</span>
+                <input id="filterDateTo" class="input" type="date" />
+              </label>
+              <button id="btnClearListDates" class="btn btn--ghost btn--small" type="button">Clear dates</button>
+
+              <label class="field field--inline">
+                <span class="field__label">Time from</span>
+                <input id="filterTimeFrom" class="input" type="time" />
+              </label>
+              <label class="field field--inline">
+                <span class="field__label">Time to</span>
+                <input id="filterTimeTo" class="input" type="time" />
+              </label>
+              <button id="btnClearListTimes" class="btn btn--ghost btn--small" type="button">Clear times</button>
+            </div>
+
+            <div class="list-toolbar__right">
+              <button id="btnPreset7" class="pill pill--small" type="button">Next 7d</button>
+              <button id="btnPreset30" class="pill pill--small" type="button">Next 30d</button>
+            </div>
+          </div>
+          <div class="helptext">Active shows upcoming + unscheduled. Past events move to Archive. Date/time range filters only affect the list.</div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table" id="itemsTable">
+            <thead>
+              <tr>
+                <th style="width: 56px;" title="Top pick">★</th>
+                <th style="width: 76px;" title="Committed">Commit</th>
+                <th style="width: 56px;" title="Done">Done</th>
+                <th>Title</th>
+                <th>Summary</th>
+                <th>Category</th>
+                <th>Neighborhood</th>
+                <th>Cost</th>
+                <th>When</th>
+                <th id="thActions" style="width: 170px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="itemsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Details Drawer -->
+  <aside id="detailsDrawer" class="drawer" hidden>
+    <div class="drawer__header">
+      <div class="drawer__title">Details</div>
+      <button id="btnCloseDetails" class="iconbtn" type="button" aria-label="Close details">×</button>
+    </div>
+    <div id="selectedDetails" class="selected">Click an event in the calendar, or a row in the list.</div>
+  </aside>
+
+  <!-- Settings Dialog -->
+  <dialog id="settingsDialog" class="dialog">
+    <form id="settingsForm" method="dialog" class="dialog__form">
+      <div class="dialog__header">
+        <h3 class="dialog__title">Settings & storage</h3>
+        <button class="btn btn--ghost" value="cancel" type="submit">Close</button>
+      </div>
+
+      <div id="storageStatus" class="helptext">Storage: Local (browser)</div>
+
+      <div class="divider"></div>
+
+      <div class="stack">
+        <div class="helptext" style="margin-top: -2px;">Calendar</div>
+        <label class="checkbox">
+          <input id="settingsCondenseEarly" type="checkbox" checked />
+          <span>Condense 12am–8am</span>
+        </label>
+        <div class="helptext">When enabled, the time grid starts at 8am. Any early-hour events are summarized above the calendar.</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stack">
+        <div class="helptext" style="margin-top: -2px;">Edit mode</div>
+
+        <div class="editmode">
+          <div class="row row--between" style="align-items: flex-start; gap: 10px;">
+            <div class="stack" style="gap: 6px;">
+              <div class="row" style="gap: 8px;">
+                <span id="editModePill" class="pill pill--small pill--toggle">Locked</span>
+                <div id="editModeStatusText" class="helptext">Unlock to add, edit, delete, import, or run data tools.</div>
+              </div>
+              <div class="helptext" style="margin-top: -2px;">Refreshing the page locks edit mode again.</div>
+            </div>
+            <button id="btnLockEditMode" class="btn btn--ghost btn--small" type="button" hidden>Lock</button>
+          </div>
+
+          <div id="editModeUnlockRow" class="field__row">
+            <input id="editModePassword" class="input" type="password" placeholder="Password" autocomplete="off" />
+            <button id="btnUnlockEditMode" class="btn btn--primary" type="button">Unlock</button>
+          </div>
+          <div id="editModeError" class="helptext" hidden>Incorrect password.</div>
+
+          <div id="editModeActions" hidden>
+            <div class="grid-2">
+              <button id="btnOpenAdd" class="btn btn--primary" type="button" disabled>Add item</button>
+              <button id="btnOpenImportExport" class="btn" type="button">Import / Export</button>
+            </div>
+            <div class="helptext">Export works anytime. Import/edit/delete require unlocking.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <details id="settingsDataTools" hidden>
+        <summary class="details-summary">Data tools & sync</summary>
+        <div class="stack" style="margin-top: 10px;">
+          <button id="btnOpenGitHubSync" class="btn" type="button" disabled>GitHub sync</button>
+          <button id="btnEnrichNYC" class="btn" type="button" disabled>Auto-fill NYC details</button>
+          <button id="btnGeoSearchNYC" class="btn" type="button" disabled>Lookup neighborhood from address</button>
+          <button id="btnResetToSeed" class="btn btn--danger" type="button" disabled>Reset to seed</button>
+          <div class="helptext">Unlock edit mode to run these tools.</div>
+        </div>
+        <div class="helptext" style="margin-top: 10px;">Reset restores the original data from your uploaded calendars (and removes your local edits).</div>
+      </details>
+    </form>
+  </dialog>
+
+  <!-- Help / Instructions Dialog -->
+  <dialog id="helpDialog" class="dialog">
+    <form method="dialog" class="dialog__form">
+      <div class="dialog__header">
+        <h3 class="dialog__title">How to use Activity Library</h3>
+        <button class="btn btn--ghost" value="cancel" type="submit">Close</button>
+      </div>
+
+      <div class="stack">
+        <div class="helptext">
+          This page is designed for browsing. Use filters to explore events, then open an event for details.
+          Editing tools are hidden unless unlocked.
+        </div>
+
+        <h4 style="margin: 8px 0 0;">Browse</h4>
+        <ul style="margin-top: 6px;">
+          <li><strong>Calendar</strong>: best for seeing what’s coming up by day/week/month.</li>
+          <li><strong>List</strong>: best for searching + scanning. Use <em>Active</em> (upcoming + unscheduled) or <em>Archive</em> (past).</li>
+          <li>Click an event (or a list row) to open the <strong>Details</strong> drawer.</li>
+        </ul>
+
+        <h4 style="margin: 8px 0 0;">Filter</h4>
+        <ul style="margin-top: 6px;">
+          <li><strong>Search</strong> matches title, notes, and address.</li>
+          <li><strong>Top picks</strong> shows starred items only.</li>
+          <li><strong>Hide done</strong> removes items marked done.</li>
+          <li><strong>Categories</strong> + <strong>Neighborhoods</strong> narrow things down (category colors match the calendar).</li>
+          <li><strong>Date/time range</strong> filters in List view only affect the list (the calendar has its own navigation).</li>
+        </ul>
+
+        <h4 style="margin: 8px 0 0;">Add to your calendar</h4>
+        <ul style="margin-top: 6px;">
+          <li>In the Details drawer, use <strong>Download .ics</strong> to save an iCalendar file.</li>
+          <li>Use <strong>Add to Google Calendar</strong> to open a pre-filled Google Calendar event.</li>
+        </ul>
+      </div>
+
+      <div class="dialog__footer">
+        <div class="spacer"></div>
+        <button class="btn" value="cancel" type="submit">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Add/Edit Dialog -->
+  <dialog id="editDialog" class="dialog">
+    <form id="editForm" method="dialog" class="dialog__form">
+      <div class="dialog__header">
+        <h3 id="editDialogTitle" class="dialog__title">Add item</h3>
+        <div class="dialog__header-actions">
+          <button id="editStarToggle" class="star-toggle" type="button" aria-label="Top pick" aria-pressed="false" title="Mark as a top pick">☆</button>
+          <button class="btn btn--ghost" value="cancel" type="submit">Close</button>
+        </div>
+      </div>
+
+      <input type="hidden" id="editId" />
+      <input type="hidden" id="editStarred" />
+
+      <div class="grid-2">
+        <label class="field">
+          <span class="field__label">Title</span>
+          <input id="editTitle" class="input" type="text" required />
+        </label>
+
+        <label class="field">
+          <span class="field__label">Category</span>
+          <select id="editCategory" class="input">
+            <option value="">—</option>
+            <option value="museums/galleries">Museums / galleries</option>
+            <option value="nightlife">Nightlife</option>
+            <option value="parties">Parties</option>
+            <option value="performances">Performances</option>
+            <option value="sweet treats">Sweet treats</option>
+            <option value="outdoors">Outdoors</option>
+            <option value="networking">Networking</option>
+            <option value="coffee">Coffee</option>
+            <option value="lunch/dinner">Lunch / dinner</option>
+            <option value="brunch">Brunch</option>
+            <option value="activism">Activism</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">One-line</span>
+        <input id="editSummary" class="input" type="text" placeholder="short description" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Cost</span>
+        <select id="editPriceTier" class="input">
+          <option value="">Not set</option>
+          <option value="free" selected>Free</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <div class="helptext">This is a rough tier (not an exact dollar amount).</div>
+      </label>
+
+      <div class="grid-2">
+        <div class="field">
+          <span class="field__label">Start (optional)</span>
+          <div class="field__row">
+            <input id="editStartDate" class="input" type="date" />
+            <input id="editStartTime" class="input" type="time" step="60" />
+          </div>
+        </div>
+        <div class="field">
+          <span class="field__label">End (optional)</span>
+          <div class="field__row">
+            <input id="editEndDate" class="input" type="date" />
+            <input id="editEndTime" class="input" type="time" step="60" />
+          </div>
+        </div>
+      </div>
+      <div class="helptext" style="margin-top: -6px;">Leave time blank for all-day.</div>
+
+      <label class="field">
+        <span class="field__label">Address</span>
+        <input id="editAddress" class="input" type="text" placeholder="venue, street, city" />
+      </label>
+
+      <div class="field">
+        <span class="field__label">Neighborhood</span>
+        <div class="field__row">
+          <input id="editNeighborhood" class="input" type="text" placeholder="e.g., Lower East Side" />
+          <button id="btnEditLookupNYC" class="btn btn--small" type="button">Lookup neighborhood</button>
+        </div>
+        <div class="helptext">Uses NYC GeoSearch to normalize the address and fill the neighborhood when possible.</div>
+      </div>
+
+      <div class="grid-2">
+        <label class="checkbox">
+          <input id="editTicketsRequired" type="checkbox" />
+          <span>Tickets required</span>
+        </label>
+        <label class="checkbox">
+          <input id="editHaveTickets" type="checkbox" />
+          <span>I have tickets</span>
+        </label>
+      </div>
+
+      <div class="grid-2">
+        <label class="checkbox">
+          <input id="editCommitted" type="checkbox" />
+          <span>Committed</span>
+        </label>
+        <label class="checkbox">
+          <input id="editDone" type="checkbox" />
+          <span>Done</span>
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">Tickets link</span>
+        <input id="editTicketsLink" class="input" type="url" placeholder="https://…" />
+      </label>
+
+      <label class="field">
+        <span class="field__label">Notes</span>
+        <textarea id="editNotes" class="textarea" rows="5" placeholder="anything you want to remember…"></textarea>
+      </label>
+
+      <details>
+        <summary class="details-summary">Recurring / multi-week open hours (advanced)</summary>
+        <div class="grid-2">
+          <label class="field">
+            <span class="field__label">RRULE (iCal format)</span>
+            <input id="editRRule" class="input" type="text" placeholder="FREQ=WEEKLY;BYDAY=FR" />
+          </label>
+          <label class="field">
+            <span class="field__label">EXDATEs (comma separated)</span>
+            <input id="editExDate" class="input" type="text" placeholder="2025-12-03T22:00" />
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label class="field">
+            <span class="field__label">Show / date range start</span>
+            <input id="editRangeStart" class="input" type="date" />
+          </label>
+          <label class="field">
+            <span class="field__label">Show / date range end</span>
+            <input id="editRangeEnd" class="input" type="date" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field__label">Open hours JSON (array)</span>
+          <textarea id="editOpenHours" class="textarea" rows="4" placeholder='[{"dow":[2,4],"start":"11:00","end":"18:00","label":"Open"}]'></textarea>
+          <span class="helptext">dow uses 0=Sun … 6=Sat. Use date range + open hours for gallery shows spanning weeks.</span>
+        </label>
+
+        <label class="field">
+          <span class="field__label">Layer id (optional)</span>
+          <input id="editLayer" class="input" type="text" placeholder="museumFreeTimes" />
+          <span class="helptext">If set, it becomes a toggleable calendar layer (useful for museum free times).</span>
+        </label>
+      </details>
+
+      <details>
+        <summary class="details-summary">Raw JSON (expert)</summary>
+        <label class="field">
+          <textarea id="editRawJson" class="textarea" rows="7" spellcheck="false" placeholder="Optional: paste JSON to override/extend fields"></textarea>
+          <span class="helptext">This is useful if you want to store extra fields without changing the UI.</span>
+        </label>
+      </details>
+
+      <div class="dialog__footer">
+        <button id="btnDelete" class="btn btn--danger" type="button" hidden>Delete</button>
+        <div class="spacer"></div>
+        <button class="btn" value="cancel" type="submit">Cancel</button>
+        <button id="btnSave" class="btn btn--primary" value="default" type="submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Import/Export Dialog -->
+  <dialog id="ioDialog" class="dialog">
+    <form id="ioForm" method="dialog" class="dialog__form">
+      <div class="dialog__header">
+        <h3 class="dialog__title">Import / Export</h3>
+        <button class="btn btn--ghost" value="cancel" type="submit">Close</button>
+      </div>
+
+      <div id="ioLockedNote" class="helptext" style="margin-top: 6px;" hidden>
+        Import is locked. Unlock edit mode in Settings to enable importing.
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h4>Import JSON</h4>
+          <p class="helptext">Paste JSON (same schema) or upload a file.</p>
+          <textarea id="importJsonText" class="textarea" rows="10" spellcheck="false" placeholder='{"schemaVersion":1,"items":[…]}'></textarea>
+
+          <div class="stack">
+            <input id="importJsonFile" type="file" accept="application/json,.json" />
+            <label class="checkbox">
+              <input id="importMerge" type="checkbox" checked />
+              <span>Merge on id (recommended)</span>
+            </label>
+            <button id="btnImportJson" class="btn btn--primary" type="button">Import JSON</button>
+          </div>
+        </div>
+
+        <div>
+          <h4>Import iCalendar (.ics)</h4>
+          <p class="helptext">Useful for Google Calendar exports. You can tag the imported items after.</p>
+          <textarea id="importIcsText" class="textarea" rows="10" spellcheck="false" placeholder='BEGIN:VCALENDAR\n…'></textarea>
+          <div class="stack">
+            <input id="importIcsFile" type="file" accept="text/calendar,.ics" />
+            <input id="importIcsLayer" class="input" type="text" placeholder="Optional layer id (e.g., museumFreeTimes)" />
+            <button id="btnImportIcs" class="btn" type="button">Import .ics</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h4>Export</h4>
+      <div class="stack">
+        <button id="btnCopyJson" class="btn" type="button">Copy JSON to clipboard</button>
+        <button id="btnDownloadJson" class="btn" type="button">Download JSON</button>
+      </div>
+
+      <div class="dialog__footer">
+        <div class="spacer"></div>
+        <button class="btn" value="cancel" type="submit">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- GitHub Sync Dialog -->
+  <dialog id="githubDialog" class="dialog">
+    <form id="githubForm" method="dialog" class="dialog__form">
+      <div class="dialog__header">
+        <h3 class="dialog__title">GitHub Sync (Gist)</h3>
+        <button class="btn btn--ghost" value="cancel" type="submit">Close</button>
+      </div>
+
+      <p class="helptext">
+        Use a GitHub <strong>Gist</strong> as your shared JSON store.
+        This makes your latest edits load the next time you open the app on GitHub Pages (or on another device).
+      </p>
+
+      <div class="grid-2">
+        <label class="field">
+          <span class="field__label">Gist ID</span>
+          <input id="ghGistId" class="input" type="text" placeholder="e.g., aa5a315d61ae…" />
+          <span class="helptext">You can paste the ID from the gist URL.</span>
+        </label>
+        <label class="field">
+          <span class="field__label">Filename in gist</span>
+          <input id="ghFilename" class="input" type="text" placeholder="activity-library.json" />
+        </label>
+      </div>
+
+      <label class="field">
+        <span class="field__label">GitHub token (required to push)</span>
+        <input id="ghToken" class="input" type="password" placeholder="ghp_… or github_pat_…" autocomplete="off" />
+        <span class="helptext">Token must have permission to read/write gists. If you leave this blank, the app can still pull if the gist is accessible, but it won’t be able to save changes to GitHub.</span>
+      </label>
+
+      <label class="checkbox">
+        <input id="ghRememberToken" type="checkbox" />
+        <span>Remember token on this device</span>
+      </label>
+
+      <details>
+        <summary class="details-summary">Create a new gist from this app</summary>
+        <div class="stack" style="margin-top: 8px;">
+          <label class="checkbox">
+            <input id="ghCreatePublic" type="checkbox" />
+            <span>Make gist public</span>
+          </label>
+          <button id="btnCreateGist" class="btn" type="button">Create new gist</button>
+          <div class="helptext">Creating a gist requires a token.</div>
+        </div>
+      </details>
+
+      <div class="divider"></div>
+
+      <div class="grid-2">
+        <button id="btnPullGist" class="btn" type="button">Pull latest</button>
+        <button id="btnPushGist" class="btn btn--primary" type="button">Push now</button>
+      </div>
+
+      <div class="dialog__footer">
+        <button id="btnDisconnectGist" class="btn btn--danger" type="button">Disconnect</button>
+        <div class="spacer"></div>
+        <button id="btnSaveGistSettings" class="btn btn--primary" type="button">Save settings</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="seed.js"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
