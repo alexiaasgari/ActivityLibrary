@@ -242,16 +242,23 @@
       <div class="divider"></div>
 
       <details id="settingsDataTools" hidden>
-        <summary class="details-summary">Data tools & sync</summary>
-        <div class="stack" style="margin-top: 10px;">
-          <button id="btnOpenGitHubSync" class="btn" type="button" disabled>GitHub sync</button>
-          <button id="btnEnrichNYC" class="btn" type="button" disabled>Auto-fill NYC details</button>
-          <button id="btnGeoSearchNYC" class="btn" type="button" disabled>Lookup neighborhood from address</button>
-          <button id="btnResetToSeed" class="btn btn--danger" type="button" disabled>Reset to seed</button>
-          <div class="helptext">Unlock edit mode to run these tools.</div>
-        </div>
-        <div class="helptext" style="margin-top: 10px;">Reset restores the original data from your uploaded calendars (and removes your local edits).</div>
-      </details>
+  <summary class="details-summary">Data tools & sync</summary>
+  <div class="stack" style="margin-top: 10px;">
+    <button id="btnOpenGitHubSync" class="btn" type="button" disabled>GitHub sync</button>
+    <button id="btnEnrichNYC" class="btn" type="button" disabled>Auto-fill NYC details</button>
+    <button id="btnGeoSearchNYC" class="btn" type="button" disabled>Lookup neighborhood from address</button>
+
+    <!-- NEW -->
+    <button id="btnCopySeedJs" class="btn" type="button" disabled>Copy updated seed.js to clipboard</button>
+    <button id="btnDownloadSeedJs" class="btn" type="button" disabled>Download updated seed.js</button>
+    <div class="helptext">Exports a new <code>seed.js</code> from your current local data so you can commit it to GitHub.</div>
+
+    <button id="btnResetToSeed" class="btn btn--danger" type="button" disabled>Reset to seed</button>
+    <div class="helptext">Unlock edit mode to run these tools.</div>
+  </div>
+  <div class="helptext" style="margin-top: 10px;">Reset restores the original data from your uploaded calendars (and removes your local edits).</div>
+</details>
+
     </form>
   </dialog>
 
