@@ -2646,7 +2646,14 @@ function updateEditModeUi() {
   if (dataToolsSection) dataToolsSection.hidden = !unlocked;
 
   // Tools that change data should be locked behind edit mode.
-  const gated = ['btnOpenGitHubSync', 'btnEnrichNYC', 'btnGeoSearchNYC', 'btnResetToSeed'];
+  const gated = [
+  'btnOpenGitHubSync',
+  'btnEnrichNYC',
+  'btnGeoSearchNYC',
+  'btnCopySeedJs',
+  'btnDownloadSeedJs',
+  'btnResetToSeed',
+];
   for (const id of gated) {
     const el = $(id);
     if (el) el.disabled = !unlocked;
@@ -3947,6 +3954,26 @@ function exportStoreJson() {
     items: store.items,
   };
 }
+function buildSeedJsText() {
+  const payload = {
+    schemaVersion: SCHEMA_VERSION,
+    generatedAt: nowIso(),
+    items: store.items,
+  };
+  const json = JSON.stringify(payload, null, 2);
+  return `// Auto-generated seed data from locally stored items\nwindow.ACTIVITY_VAULT_SEED = ${json};\n`;
+}
+
+async function copySeedJsToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    alert('Copied seed.js to clipboard. Replace the repo\'s seed.js with this content and commit it.');
+  } catch (e) {
+    console.error(e);
+    alert('Could not copy seed.js to clipboard. Try the download button instead.');
+  }
+}
+
 
 function downloadJson(filename, data) {
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -4557,6 +4584,18 @@ if (tabActive && tabArchive) {
       alert(err?.message || String(err));
     });
   });
+  $('btnCopySeedJs').addEventListener('click', async () => {
+  if (!requireEditMode()) return;
+  const text = buildSeedJsText();
+  await copySeedJsToClipboard(text);
+});
+
+$('btnDownloadSeedJs').addEventListener('click', () => {
+  if (!requireEditMode()) return;
+  const text = buildSeedJsText();
+  downloadTextFile('seed.js', text, 'text/javascript;charset=utf-8');
+});
+
 
   $('btnResetToSeed').addEventListener('click', () => {
     if (!requireEditMode()) return;
