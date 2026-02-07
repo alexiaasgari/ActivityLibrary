@@ -1,7 +1,7 @@
 // Auto-generated seed data from locally stored items
 window.ACTIVITY_VAULT_SEED = {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-01T23:30:21.901Z",
+  "generatedAt": "2026-02-07T20:55:03.904Z",
   "items": [
     {
       "id": "049e242fc5e7",
@@ -7584,6 +7584,581 @@ window.ACTIVITY_VAULT_SEED = {
       "committed": false,
       "done": false,
       "cost": 0
+    },
+    {
+      "id": "av_stoner_stoplight_20260219_bushwick",
+      "title": "Dank Dykes Presents: Stoner Stoplight",
+      "type": "parties",
+      "summary": "A queer cannabis social mixer featuring a stoplight theme for meeting new people, hosted by Baileigh Jane & Aly Hassell.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "1157 Myrtle Ave, Brooklyn, NY 11206",
+      "neighborhood": "Bushwick",
+      "notes": "Event by @dankdykes_ at Boyfriend Co-op. Includes keywords: queer, lesbian-owned space, cannabis-friendly, social mixer, 21+, community event. Hosted by Baileigh Jane and Aly Hassell.",
+      "layer": "queerSocials",
+      "tags": [
+        "queer",
+        "cannabis",
+        "nightlife",
+        "lesbian",
+        "social",
+        "420-friendly"
+      ],
+      "currency": "USD",
+      "start": "2026-02-19T21:00",
+      "end": "2026-02-20T00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://boyfriend.coop/",
+          "https://dankdykes.com/",
+          "https://www.postcard.inc/places/boyfriend-co-op-new-york-Neryak23Mc_"
+        ],
+        "retrievedAt": "2026-02-07T18:15:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_glam-slam-love-hurts_20260214_bushwick",
+      "title": "GLAM SLAM! “LOVE HURTS” (Skate + Drag Wrestling + Dance Party)",
+      "type": "performances",
+      "summary": "A special Valentine's edition of GLAM SLAM featuring roller skating, drag wrestling, and a rave-style dance party.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/event/q27r59-glam-slam-love-hurts-valentines-day-edition-skate-drag-wrestling-dance-party-14th-feb-xanadu-new-york-city-tickets",
+      "haveTickets": false,
+      "address": "262 Starr St, Brooklyn, NY 11237",
+      "neighborhood": "Bushwick",
+      "notes": "Xanadu Presents: A special Valentine's edition of GLAM SLAM. Schedule: 7:00 PM - Skating; 10:00 PM - Queer WrestleMania drag wrestling meltdown and rave begins. Dress code: 'Liberace on acid & 80s jazzercise'. Collaboration with A Matter of Pride Wrestling. TAGS: skating, drag wrestling, queer, performance art, themed bar, Bushwick, LGBTQ+.",
+      "layer": "performanceLayer",
+      "tags": [
+        "skating",
+        "drag wrestling",
+        "queer",
+        "nightlife",
+        "performance art",
+        "Bushwick"
+      ],
+      "currency": "USD",
+      "start": "2026-02-14T19:00",
+      "end": "2026-02-15T03:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://ra.co/events/2354331",
+          "https://www.xanadu.nyc/cal",
+          "https://dice.fm/event/q27r59-glam-slam-love-hurts-valentines-day-edition-skate-drag-wrestling-dance-party-14th-feb-xanadu-new-york-city-tickets"
+        ],
+        "retrievedAt": "2026-02-07T13:04:19Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_xanadu-roller-arts_unscheduled_bushwick",
+      "title": "Xanadu Roller Arts",
+      "type": "nightlife",
+      "summary": "A vibrant roller skating rink and arts space in Bushwick offering themed skate nights, live music, and performances.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/venue/xanadu-roller-arts-689e",
+      "haveTickets": false,
+      "address": "23 Meadow St, Brooklyn, NY 11206",
+      "neighborhood": "Bushwick",
+      "notes": "Features 'Glam Slam' wrestling and live music events like Lion Babe. Includes food and drink options. High-energy nightlife and performance art venue.",
+      "layer": "nightlife",
+      "tags": [
+        "roller skating",
+        "performance art",
+        "themed bar",
+        "live music",
+        "Brooklyn",
+        "Xanadu"
+      ],
+      "currency": "USD",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.instagram.com/xanadu.nyc/",
+          "https://dice.fm/venue/xanadu-roller-arts-689e"
+        ],
+        "retrievedAt": "2026-02-07T18:02:51Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_dream_machines_20260222_hex_house_east_williamsburg",
+      "title": "Dream Machines: Objectification Pleasure Garden",
+      "type": "performances",
+      "summary": "An experimental playground and collective research performance exploring the erotics of becoming objects and machines.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.eventbrite.com",
+      "haveTickets": true,
+      "address": "366 Devoe St, Brooklyn, NY 11211",
+      "neighborhood": "East Williamsburg",
+      "notes": "Facilitated by vii / soil with support from a.Monti. Continuation of research by NORMAL study group. Tickets (2) received in alexiaas99 email.",
+      "layer": "performanceArt",
+      "tags": [
+        "performance art",
+        "somatics",
+        "experimental",
+        "Brooklyn",
+        "hex house",
+        "Instagram",
+        "free event"
+      ],
+      "currency": "USD",
+      "start": "2026-02-22T14:00",
+      "end": "2026-02-22T18:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.instagram.com/soil_gushing",
+          "https://hexhouse.studio/"
+        ],
+        "retrievedAt": "2026-02-07T13:02:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_valentines_play_date_20260214_barcade_chelsea",
+      "title": "Valentine's Play Date: Singles Mingle Arcade Night",
+      "type": "nightlife",
+      "summary": "7th Annual Queer Social singles mingle at Barcade Chelsea. Old-school arcade games, drinks, and networking for the LGBTQ+ community.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.queersocial.us",
+      "haveTickets": false,
+      "address": "148 W 24th St, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "notes": "Location is at the corner of 24th & 7th. No cover, open to the public. 21+ with ID. Check in with Jonathan upon arrival. (Mapping: nightlife -> default)",
+      "layer": "personalMeetups",
+      "tags": [
+        "LGBTQ+",
+        "arcade",
+        "singles mingle",
+        "Valentine's Day",
+        "Chelsea",
+        "gaming",
+        "no cover"
+      ],
+      "currency": "USD",
+      "start": "2026-02-14T18:00",
+      "end": "2026-02-14T21:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.queersocial.us",
+          "https://barcade.com/location/new-york-chelsea/"
+        ],
+        "retrievedAt": "2026-02-05T23:55:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_moma_ruth_asawa_retrospective_20251019_midtown",
+      "title": "Ruth Asawa: A Retrospective",
+      "type": "museums/galleries",
+      "summary": "The first major posthumous retrospective of Japanese American artist Ruth Asawa, featuring over 300 works including her iconic looped-wire sculptures, bronze casts, and archival materials.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/exhibitions/5768",
+      "haveTickets": false,
+      "address": "11 West 53rd Street, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping applied: museums/galleries -> 'museumLayer'. This is a massive exhibition (MoMA's largest for a woman artist) spanning 60 years of work. Includes UNIQLO Friday Nights where admission is free for NY residents (5:30–8:30 PM).",
+      "layer": "museumLayer",
+      "tags": [
+        "Japanese-American",
+        "sculpture",
+        "modern art",
+        "wire art",
+        "retrospective",
+        "Asian-American artist",
+        "Midtown",
+        "MoMA"
+      ],
+      "currency": "USD",
+      "dateRange": {
+        "start": "2025-10-19",
+        "end": "2026-02-07"
+      },
+      "openHours": [
+        {
+          "dow": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            6
+          ],
+          "start": "10:30",
+          "end": "17:30",
+          "label": "Standard Hours"
+        },
+        {
+          "dow": [
+            5
+          ],
+          "start": "10:30",
+          "end": "20:00",
+          "label": "Late Night / UNIQLO Friday"
+        }
+      ],
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/exhibitions/5768",
+          "https://press.moma.org/exhibition/asawa/",
+          "https://news.artnet.com/art-world/ruth-asawa-retrospective-moma-2700668"
+        ],
+        "retrievedAt": "2026-02-03T17:08:50Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_queer-tag-lgbtq-laser-tag-bowling-night_20260226_chelsea-piers",
+      "title": "Queer Tag: LGBTQ Laser Tag & Bowling Night",
+      "type": "nightlife",
+      "summary": "A high-energy social mixer for the LGBTQ+ community featuring unlimited laser tag and bowling at Lucky Strike.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.eventbrite.com/e/queer-tag-lgbtq-laser-tag-bowling-night-tickets-1980506695841",
+      "haveTickets": false,
+      "address": "60 Chelsea Piers, New York, NY 10011",
+      "neighborhood": "Chelsea",
+      "notes": "Includes unlimited laser tag and bowling (shoes included). 21+ event. Sober-friendly socializing option available. Organized by Queer Social.",
+      "layer": "personalMeetups",
+      "tags": [
+        "LGBTQ+",
+        "laser tag",
+        "bowling",
+        "social mixer",
+        "sober friendly",
+        "Queer Social",
+        "Chelsea Piers"
+      ],
+      "currency": "USD",
+      "start": "2026-02-26T20:00",
+      "end": "2026-02-26T23:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.eventbrite.com/e/queer-tag-lgbtq-laser-tag-bowling-night-tickets-1980506695841",
+          "https://gomag.com/event/queer-tag-lgbtq-laser-tag-bowling-night-20/"
+        ],
+        "retrievedAt": "2025-02-05T23:51:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-member-early-hour_20260207_midtown",
+      "title": "Member Early Hour",
+      "type": "museums/galleries",
+      "summary": "Exclusive serene morning stroll through select MoMA galleries before public opening.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/programs/45",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Recurring every Sat/Sun; member guest privileges apply.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "member-exclusive",
+        "morning",
+        "art museum"
+      ],
+      "currency": "USD",
+      "start": "2026-02-07T09:30:00-05:00",
+      "end": "2026-02-07T10:30:00-05:00",
+      "rrule": "FREQ=WEEKLY;BYDAY=SA,SU",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-last-look-ruth-asawa_20260208_midtown",
+      "title": "Last Look: Ruth Asawa: A Retrospective",
+      "type": "museums/galleries",
+      "summary": "Final chance for members to view the transformative Ruth Asawa retrospective on Floor 6.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/exhibitions/5768",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Member-exclusive gallery experience.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "Ruth Asawa",
+        "retrospective",
+        "sculpture"
+      ],
+      "currency": "USD",
+      "start": "2026-02-08T10:30:00-05:00",
+      "end": "2026-02-08T17:30:00-05:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-family-festival-color-play_20260214_midtown",
+      "title": "MoMA Family Festival: Color Play (Member Day)",
+      "type": "museums/galleries",
+      "summary": "Exclusive member-only access day for the Family Festival featuring artist-created environments.",
+      "priceTier": "",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://familyfest.moma.org/tickets.html",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Timed-entry required.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "family",
+        "kids",
+        "interactive"
+      ],
+      "currency": "USD",
+      "start": "2026-02-14T10:00:00-05:00",
+      "end": "2026-02-14T17:00:00-05:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://familyfest.moma.org/tickets.html"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-explore-this-activity-stations_20260221_midtown",
+      "title": "Explore This! Activity Stations (Member Registration)",
+      "type": "museums/galleries",
+      "summary": "Special activity stations for young art lovers part of Member Family Week.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/programs/188",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Part of Member Family Week.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "family-week",
+        "education",
+        "kids"
+      ],
+      "currency": "USD",
+      "start": "2026-02-21T00:00:00-05:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/programs/188"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-member-shopping-days_20260227_midtown",
+      "title": "Member Shopping Days",
+      "type": "other",
+      "summary": "Members save 20% on purchases in-store and online at MoMA Design Store.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "44 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Member exclusive discount event at MoMA Design Store.",
+      "layer": "",
+      "tags": [
+        "MoMA",
+        "shopping",
+        "discount",
+        "design"
+      ],
+      "currency": "USD",
+      "start": "2026-02-27T09:30:00-05:00",
+      "end": "2026-02-27T21:00:00-05:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/programs/42"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_moma-member-previews-frida-and-diego_20260318_midtown",
+      "title": "Member Previews: Frida and Diego: The Last Dream",
+      "type": "museums/galleries",
+      "summary": "Exclusive early access for members to the 'Frida and Diego' exhibition.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/exhibitions/",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Exhibition features Mexican artists Frida Kahlo and Diego Rivera.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "Frida Kahlo",
+        "Diego Rivera",
+        "Mexican Art"
+      ],
+      "currency": "USD",
+      "dateRange": {
+        "start": "2026-03-18",
+        "end": "2026-03-20"
+      },
+      "openHours": [
+        {
+          "dow": [
+            3,
+            4,
+            5
+          ],
+          "start": "10:30",
+          "end": "17:30",
+          "label": "Member Preview"
+        }
+      ],
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/exhibitions/"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_moma-member-previews-marcel-duchamp_20260409_midtown",
+      "title": "Member Previews: Marcel Duchamp",
+      "type": "museums/galleries",
+      "summary": "Early look at category-defying artist Marcel Duchamp's transformation of modern art.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.moma.org/calendar/events/11094",
+      "haveTickets": false,
+      "address": "11 West 53rd St, New York, NY 10019",
+      "neighborhood": "Midtown",
+      "notes": "Mapping Applied: museums/galleries -> 'museumLayer'. Runs April 9–11.",
+      "layer": "museumLayer",
+      "tags": [
+        "MoMA",
+        "Marcel Duchamp",
+        "Dada",
+        "conceptual art"
+      ],
+      "currency": "USD",
+      "dateRange": {
+        "start": "2026-04-09",
+        "end": "2026-04-11"
+      },
+      "openHours": [
+        {
+          "dow": [
+            4,
+            5,
+            6
+          ],
+          "start": "10:30",
+          "end": "17:30",
+          "label": "Member Preview"
+        }
+      ],
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.moma.org/calendar/exhibitions/5820"
+        ],
+        "retrievedAt": "2026-02-07T15:51:00-05:00"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
     }
   ]
 };
+;
