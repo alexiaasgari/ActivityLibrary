@@ -8111,6 +8111,49 @@ window.ACTIVITY_VAULT_SEED = {
       "done": false
     },
     {
+  "id": "av_stoner_stoplight_20260219_bushwick",
+  "title": "Dank Dykes Presents: Stoner Stoplight",
+  "type": "parties",
+  "summary": "A queer cannabis social mixer featuring a stoplight theme for meeting new people, hosted by Baileigh Jane & Aly Hassell.",
+  "priceTier": "free",
+  "starred": false,
+  "ticketsRequired": false,
+  "ticketsLink": "",
+  "haveTickets": false,
+  "address": "1157 Myrtle Ave, Brooklyn, NY 11206",
+  "neighborhood": "Bushwick",
+  "notes": "Event by @dankdykes_ at Boyfriend Co-op. Includes keywords: queer, lesbian-owned space, cannabis-friendly, social mixer, 21+, community event. Hosted by Baileigh Jane and Aly Hassell.",
+  "layer": "queerSocials",
+  "tags": [
+    "queer",
+    "cannabis",
+    "nightlife",
+    "lesbian",
+    "social",
+    "420-friendly"
+  ],
+  "currency": "USD",
+  "start": "2026-02-19T21:00",
+  "end": "2026-02-20T00:00",
+  "source": {
+    "kind": "web",
+    "urls": [
+      "https://boyfriend.coop/",
+      "https://dankdykes.com/",
+      "https://www.postcard.inc/places/boyfriend-co-op-new-york-Neryak23Mc_"
+    ],
+    "retrievedAt": "2026-02-07T18:15:00Z"
+  },
+  "isFree": true,
+  "cost": 0,
+  "allDay": false,
+  "rrule": null,
+  "exdate": [],
+  "done": false,
+  "committed": false
+}
+
+    {
       "id": "av_moma-member-previews-marcel-duchamp_20260409_midtown",
       "title": "Member Previews: Marcel Duchamp",
       "type": "museums/galleries",
