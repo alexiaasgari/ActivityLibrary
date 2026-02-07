@@ -8027,7 +8027,7 @@ window.ACTIVITY_VAULT_SEED = {
     },
     {
       "id": "av_moma-member-shopping-days_20260227_midtown",
-      "title": "Member Shopping Days",
+      "title": "MoMA Member Shopping Days",
       "type": "other",
       "summary": "Members save 20% on purchases in-store and online at MoMA Design Store.",
       "priceTier": "free",
