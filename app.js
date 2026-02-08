@@ -33,6 +33,15 @@ function safeJsonParse(text, fallback = null) {
   try { return JSON.parse(text); } catch { return fallback; }
 }
 
+function deepClone(obj) {
+  // Prefer structuredClone when available (handles nested objects/arrays safely).
+  try {
+    if (typeof structuredClone === 'function') return structuredClone(obj);
+  } catch (_) {}
+  // Fallback: JSON clone (good enough for our plain data objects)
+  return JSON.parse(JSON.stringify(obj ?? null));
+}
+
 function toArray(x) {
   return Array.isArray(x) ? x : (x ? [x] : []);
 }
@@ -474,7 +483,7 @@ function loadLocalStore() {
     const s = {
       schemaVersion: SCHEMA_VERSION,
       updatedAt: nowIso(),
-      items: seed.items,
+      items: deepClone(seed.items),
       sources: { seedGeneratedAt: seed.generatedAt },
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
@@ -484,7 +493,7 @@ function loadLocalStore() {
   const parsed = safeJsonParse(raw, null);
   if (!parsed || typeof parsed !== 'object') {
     const seed = getSeed();
-    const s = { schemaVersion: SCHEMA_VERSION, updatedAt: nowIso(), items: seed.items };
+    const s = { schemaVersion: SCHEMA_VERSION, updatedAt: nowIso(), items: deepClone(seed.items) };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     return s;
   }
@@ -504,7 +513,7 @@ function resetLocalToSeed() {
   const s = {
     schemaVersion: SCHEMA_VERSION,
     updatedAt: nowIso(),
-    items: seed.items,
+    items: deepClone(seed.items),
     sources: { seedGeneratedAt: seed.generatedAt },
   };
   saveLocalStore(s);
@@ -518,6 +527,186 @@ function backupLocalStore(label = 'backup') {
   } catch {
     // ignore
   }
+}
+
+
+// ---------- Seed auto-sync + recurring tagging ----------
+
+const RECURRING_TAG = 'recurring';
+
+function normalizeTagValue(tag) {
+  return normalizeStr(tag).toLowerCase();
+}
+
+function hasTag(item, tag) {
+  const want = normalizeTagValue(tag);
+  if (!want) return false;
+  const tags = toArray(item?.tags).map(normalizeTagValue);
+  return tags.includes(want);
+}
+
+function ensureTag(item, tag) {
+  const want = normalizeTagValue(tag);
+  if (!want) return false;
+  if (!item) return false;
+
+  if (!Array.isArray(item.tags)) item.tags = [];
+  const existing = item.tags.map(normalizeTagValue);
+  if (existing.includes(want)) return false;
+
+  item.tags.push(tag);
+  return true;
+}
+
+function extractIsoDatePart(value) {
+  const v = normalizeStr(value);
+  if (!v) return '';
+  // "YYYY-MM-DD" or "YYYY-MM-DDTHH:mm"
+  const m = v.match(/^(\d{4}-\d{2}-\d{2})/);
+  return m ? m[1] : '';
+}
+
+function extractIsoTimePart(value) {
+  const v = normalizeStr(value);
+  if (!v) return '';
+  const m = v.match(/T(\d{2}:\d{2})/);
+  return m ? m[1] : '';
+}
+
+function recurringIdentityKey(item) {
+  const title = normalizeStr(item?.title).toLowerCase();
+  if (!title) return '';
+
+  const layer = normalizeStr(item?.layer).toLowerCase();
+  const type = normalizeStr(item?.type).toLowerCase();
+  const allDay = item?.allDay === true ? 'allday' : 'timed';
+  const startT = extractIsoTimePart(item?.start);
+  const endT = extractIsoTimePart(item?.end);
+
+  // Identity intentionally ignores the specific calendar date.
+  // We also intentionally *do not* include address, because many items omit it and we
+  // still want them detected as repeats if the title/time matches across dates.
+  return [title, layer, type, allDay, startT, endT].join('|');
+}
+
+function applyRecurringTagRules(items) {
+  const arr = Array.isArray(items) ? items : [];
+  let changed = false;
+
+  // 1) Museum free times: always recurring
+  for (const it of arr) {
+    if (normalizeStr(it?.layer) === 'museumFreeTimes') {
+      changed = ensureTag(it, RECURRING_TAG) || changed;
+    }
+  }
+
+  // 2) Any RRULE item: tag recurring (helps filtering/labels)
+  for (const it of arr) {
+    if (normalizeStr(it?.rrule)) {
+      changed = ensureTag(it, RECURRING_TAG) || changed;
+    }
+  }
+
+  // 3) Any "same event" repeated over multiple dates: tag recurring
+  // Group by identity ignoring the date part, then check for >1 unique date.
+  const groups = new Map(); // key -> { items: [], dates: Set<string> }
+
+  for (const it of arr) {
+    const key = recurringIdentityKey(it);
+    if (!key) continue;
+
+    const date =
+      extractIsoDatePart(it?.start) ||
+      extractIsoDatePart(it?.dateRange?.start) ||
+      '';
+
+    if (!groups.has(key)) groups.set(key, { items: [], dates: new Set() });
+
+    const g = groups.get(key);
+    g.items.push(it);
+    if (date) g.dates.add(date);
+  }
+
+  for (const g of groups.values()) {
+    if (g.dates.size >= 2) {
+      for (const it of g.items) {
+        changed = ensureTag(it, RECURRING_TAG) || changed;
+      }
+    }
+  }
+
+  return changed;
+}
+
+function ensureSeedItemHasId(seedItem) {
+  const raw = seedItem && typeof seedItem === 'object' ? seedItem : {};
+  const id = normalizeStr(raw.id);
+  if (id) return raw;
+
+  // Deterministic fallback for rare cases where a seed item lacks an id.
+  const sig = [
+    normalizeStr(raw.title).toLowerCase(),
+    normalizeStr(raw.start),
+    normalizeStr(raw.end),
+    normalizeStr(raw.rrule),
+    normalizeStr(raw.layer),
+    normalizeStr(raw.address).toLowerCase(),
+  ].join('|');
+
+  return { ...raw, id: `seed_${stableShortId(sig)}` };
+}
+
+/**
+ * On page load we want seed updates to be reflected automatically:
+ * - Merge any seed items that are missing from local storage (by id).
+ * - Apply recurring tagging rules (museum layer + repeated items).
+ *
+ * NOTE: This is additive only (does not overwrite local edits).
+ */
+function syncSeedAndRecurringTags({ persist = true } = {}) {
+  const seed = getSeed();
+  const seedItems = Array.isArray(seed?.items) ? seed.items : [];
+
+  if (!Array.isArray(store.items)) store.items = [];
+
+  let changed = false;
+  let added = 0;
+
+  const existingIds = new Set(
+    store.items.map(it => normalizeStr(it?.id)).filter(Boolean)
+  );
+
+  for (const rawSeedItem of seedItems) {
+    const withId = ensureSeedItemHasId(deepClone(rawSeedItem));
+    const sid = normalizeStr(withId.id);
+
+    if (!sid) continue;
+    if (existingIds.has(sid)) continue;
+
+    store.items.push(normalizeItem(withId));
+    existingIds.add(sid);
+    added++;
+    changed = true;
+  }
+
+  // Track which seed we last synced from (useful for debugging / tooling)
+  if (normalizeStr(seed?.generatedAt)) {
+    store.sources = store.sources || {};
+    if (store.sources.seedGeneratedAt !== seed.generatedAt) {
+      store.sources.seedGeneratedAt = seed.generatedAt;
+      changed = true;
+    }
+  }
+
+  // Apply recurring tag rules (museum layer + duplicates)
+  const tagChanged = applyRecurringTagRules(store.items);
+  changed = tagChanged || changed;
+
+  if (changed && persist) {
+    saveLocalStore(store);
+  }
+
+  return { added, changed };
 }
 
 // ---------- GitHub Sync config ----------
@@ -1625,7 +1814,14 @@ function hasCalendarPresence(item) {
 }
 
 function isRecurringItem(item) {
-  return !!normalizeStr(item?.rrule);
+  if (!!normalizeStr(item?.rrule)) return true;
+
+  // Treat museum free times as recurring (even if stored as one-off instances)
+  if (normalizeStr(item?.layer) === 'museumFreeTimes') return true;
+
+  // Also treat explicitly tagged items as recurring
+  const tags = toArray(item?.tags).map(t => normalizeStr(t).toLowerCase());
+  return tags.includes('recurring');
 }
 
 function isAllDayDateOnly(item) {
@@ -2568,6 +2764,10 @@ let config = loadConfig();
 let store = loadLocalStore();
 // Normalize on load (type mapping, defaults)
 store.items = (store.items || []).map(normalizeItem);
+
+// On every reload, merge in any *new* seed items (without overwriting local edits)
+// and apply recurring tagging rules.
+syncSeedAndRecurringTags({ persist: true });
 
 const state = {
 
@@ -3707,6 +3907,11 @@ function upsertItem(item) {
   const idx = store.items.findIndex(it => it.id === item.id);
   if (idx >= 0) store.items[idx] = item;
   else store.items.unshift(item);
+
+  // Adding/editing an item can create new "same event" repeats across dates
+  // (and museum free times should always be recurring).
+  applyRecurringTagRules(store.items);
+
   persistAndMaybeSync();
 }
 
@@ -4015,6 +4220,9 @@ function importJson(payload, { merge = true } = {}) {
     }
     store.items = Array.from(byId.values());
   }
+
+  // Apply recurring tagging rules after import (museum layer + duplicates)
+  applyRecurringTagRules(store.items);
 
   persistAndMaybeSync();
 }
@@ -4602,6 +4810,10 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
     const ok = confirm('Reset to seed? This will remove your local changes.');
     if (!ok) return;
     store = resetLocalToSeed();
+    // Keep runtime expectations consistent (defaults, arrays, etc.)
+    store.items = (store.items || []).map(normalizeItem);
+    // Apply recurring tagging rules right away
+    syncSeedAndRecurringTags({ persist: false });
     state.filters.enabledLayers = new Set(LAYER_TOGGLE_ORDER);
     state.selectedId = null;
     closeDetailsDrawer();
@@ -4733,6 +4945,7 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
     try {
       saveGistSettingsFromDialog();
       await initRemoteOnLoad();
+      syncSeedAndRecurringTags({ persist: true });
       refresh();
       $('githubDialog').close();
       alert('Saved GitHub settings.');
@@ -4789,6 +5002,9 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
   // Boot sequence: pull remote (if configured) then render
   (async () => {
     await initRemoteOnLoad();
+
+    // After pulling from remote (if configured), re-apply seed sync + recurring tags
+    syncSeedAndRecurringTags({ persist: true });
 
     refresh();
     setView('calendar');
