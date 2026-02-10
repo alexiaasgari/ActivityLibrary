@@ -103,6 +103,30 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 
+/* Mobile filters toggle (hidden on desktop) */
+.btn--filters { display: none; }
+
+.panel__title-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Close link only appears on mobile */
+.linkbtn--close { display: none; }
+
+/* Backdrop for the mobile filters drawer */
+.backdrop {
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15,23,42,0.35);
+  backdrop-filter: blur(2px);
+  z-index: 44;
+}
+
 /* Layout */
 .layout {
   display: grid;
@@ -111,6 +135,7 @@ a:hover { text-decoration: underline; }
   gap: 16px;
   padding: 16px;
   height: calc(100vh - var(--header-h));
+  height: calc(100dvh - var(--header-h));
   overflow: hidden;
 }
 
@@ -965,22 +990,77 @@ body.has-drawer .layout {
 
 /* Responsive */
 @media (max-width: 980px) {
-  body { overflow: auto; }
-  .layout { height: auto; overflow: visible; }
-  .sidebar { height: auto; overflow: visible; }
-  .main { height: auto; overflow: visible; display: block; }
-  .view { height: auto; overflow: visible; display: block; }
-  body.has-drawer .layout {
-    margin-right: 0;
-  }
+  /* Keep the "app-like" layout (no page scroll). Use internal scroll areas instead. */
+  html, body { height: 100%; overflow: hidden; }
+
   .layout {
     grid-template-columns: 1fr;
+    padding: 12px;
+    gap: 12px;
   }
+
+  /* Header buttons: keep a single row; allow horizontal scrolling if needed. */
+  .header-actions {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .header-actions::-webkit-scrollbar { display: none; }
+
+  /* Show the Filters toggle button on mobile */
+  .btn--filters { display: inline-flex; }
+
+  /* Sidebar becomes an off-canvas drawer */
+  .sidebar {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    width: min(360px, 92vw);
+    height: calc(100vh - var(--header-h));
+    height: calc(100dvh - var(--header-h));
+    padding: 12px;
+
+    background: rgba(255,255,255,0.92);
+    border-right: 1px solid var(--border);
+    box-shadow: 18px 0 42px var(--shadow2);
+    backdrop-filter: blur(10px);
+
+    transform: translateX(-105%);
+    transition: transform 180ms ease;
+    z-index: 45;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.has-filters .sidebar { transform: translateX(0); }
+  body.has-filters .backdrop { /* visibility controlled via [hidden] + JS */ }
+
+  /* Close link in the Filters panel title row appears on mobile */
+  .linkbtn--close { display: inline-flex; }
+
+  /* Ensure drawer doesn't squeeze the layout on mobile */
+  body.has-drawer .layout { margin-right: 0; }
 
   .drawer {
     width: min(420px, 100vw);
+    -webkit-overflow-scrolling: touch;
   }
 }
+
+
+
+@media (max-width: 720px) {
+  /* Reduce header height on phones */
+  .brand__subtitle { display: none; }
+  .brand__title { font-size: 16px; }
+
+  /* FullCalendar: smaller toolbar/button sizing so it fits */
+  .fc .fc-toolbar.fc-header-toolbar { margin-bottom: 8px; }
+  .fc .fc-toolbar-title { font-size: 16px; }
+  .fc .fc-button { padding: 0.35em 0.55em; font-size: 12px; }
+}
+
 
 
 /* Tabs (list: Active / Archive) */
