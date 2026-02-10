@@ -3675,8 +3675,13 @@ function initCalendar() {
 
   hide(fallback);
 
+  const isPhone = (() => {
+    try { return window.matchMedia && window.matchMedia('(max-width: 720px)').matches; } catch (_) {}
+    return (window.innerWidth || 0) <= 720;
+  })();
+
   const calendar = new FullCalendar.Calendar(calEl, {
-    initialView: 'timeGridWeek',
+    initialView: isPhone ? 'listWeek' : 'timeGridWeek',
     nowIndicator: true,
     height: '100%',
     selectable: false,
@@ -3768,7 +3773,7 @@ function initCalendar() {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      right: isPhone ? 'dayGridMonth,timeGridDay,listWeek' : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
     events: (fetchInfo, successCallback, failureCallback) => {
       try {
@@ -4493,14 +4498,76 @@ function updateHeaderHeightVar() {
   document.documentElement.style.setProperty('--header-h', `${h}px`);
 }
 
+
+// ---------- Mobile: filters sidebar toggle ----------
+
+function isNarrowLayout() {
+  try {
+    return window.matchMedia && window.matchMedia('(max-width: 980px)').matches;
+  } catch (_) {
+    return (window.innerWidth || 0) <= 980;
+  }
+}
+
+function setFiltersOpen(open) {
+  const isOpen = open === true;
+
+  // Only apply the overlay behavior on narrow layouts.
+  if (!isNarrowLayout()) {
+    document.body.classList.remove('has-filters');
+    const backdrop = $('filtersBackdrop');
+    if (backdrop) backdrop.hidden = true;
+    const btn = $('btnToggleFilters');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    return;
+  }
+
+  document.body.classList.toggle('has-filters', isOpen);
+
+  const btn = $('btnToggleFilters');
+  if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+  const backdrop = $('filtersBackdrop');
+  if (backdrop) backdrop.hidden = !isOpen;
+}
+
+function toggleFilters() {
+  const isOpen = document.body.classList.contains('has-filters');
+  setFiltersOpen(!isOpen);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   updateHeaderHeightVar();
 
   window.addEventListener('resize', () => {
     updateHeaderHeightVar();
     try { state.calendar?.updateSize(); } catch (_) {}
+    // If the viewport switches between desktop/mobile widths, reset the filters drawer state.
+    try { setFiltersOpen(false); } catch (_) {}
   });
   // (Layer toggles are fixed; do not infer from JSON.)
+
+
+  // Filters sidebar (mobile)
+  const filtersBtn = $('btnToggleFilters');
+  if (filtersBtn) {
+    filtersBtn.addEventListener('click', () => toggleFilters());
+  }
+
+  const closeFiltersBtn = $('btnCloseFilters');
+  if (closeFiltersBtn) {
+    closeFiltersBtn.addEventListener('click', () => setFiltersOpen(false));
+  }
+
+  const filtersBackdrop = $('filtersBackdrop');
+  if (filtersBackdrop) {
+    filtersBackdrop.addEventListener('click', () => setFiltersOpen(false));
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setFiltersOpen(false);
+  });
+
 
   // View toggles
   $('btnViewCalendar').addEventListener('click', () => setView('calendar'));
@@ -4608,6 +4675,7 @@ if (tabActive && tabArchive) {
 
   $('btnApplyFilters').addEventListener('click', () => {
     refresh();
+    setFiltersOpen(false);
   });
 
   const priceEl = $('filterPriceTier');
@@ -5016,6 +5084,7 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
 
 function setView(view) {
   state.view = view;
+  try { setFiltersOpen(false); } catch (_) {}
 
   const calView = $('calendarView');
   const listView = $('listView');
