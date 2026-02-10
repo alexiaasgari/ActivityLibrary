@@ -8151,7 +8151,7 @@ window.ACTIVITY_VAULT_SEED = {
   "exdate": [],
   "done": false,
   "committed": false
-}
+},
 
     {
       "id": "av_moma-member-previews-marcel-duchamp_20260409_midtown",
