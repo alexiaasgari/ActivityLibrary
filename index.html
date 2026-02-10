@@ -21,6 +21,7 @@
     </div>
 
     <div class="header-actions">
+      <button id="btnToggleFilters" class="btn btn--ghost btn--filters" type="button" aria-expanded="false" aria-controls="filtersSidebar">Filters</button>
       <button id="btnViewCalendar" class="btn btn--primary" type="button">Calendar</button>
       <button id="btnViewList" class="btn" type="button">List</button>
       <button id="btnOpenHelp" class="btn" type="button">Instructions</button>
@@ -28,12 +29,17 @@
     </div>
   </header>
 
+  <div id="filtersBackdrop" class="backdrop" hidden></div>
+
   <div class="layout">
-    <aside class="sidebar">
+    <aside id="filtersSidebar" class="sidebar" aria-label="Filters">
       <section class="panel">
         <div class="panel__title-row">
           <h2 class="panel__title">Filters</h2>
-          <button id="btnClearFilters" class="linkbtn" type="button">Clear</button>
+          <div class="panel__title-actions">
+            <button id="btnCloseFilters" class="linkbtn linkbtn--close" type="button">Close</button>
+            <button id="btnClearFilters" class="linkbtn" type="button">Clear</button>
+          </div>
         </div>
 
         <label class="field">
