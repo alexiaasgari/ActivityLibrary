@@ -1146,23 +1146,24 @@ const DEFAULT_TYPES = [
 // ---------- Type color coding ----------
 
 const TYPE_COLOR_PRESET = {
-  'museums/galleries': '#3b82f6',
-  'nightlife': '#a855f7',
-  'parties': '#ef4444',
-  'performances': '#6366f1',
-  'sweet treats': '#ec4899',
-  'outdoors': '#22c55e',
-  'networking': '#06b6d4',
-  'coffee': '#a16207',
-  'lunch/dinner': '#f97316',
-  'brunch': '#f59e0b',
-  'activism': '#14b8a6',
-  'other': '#64748b',
+  // Updated to match the warmer app palette
+  'museums/galleries': '#D18E97',
+  'nightlife': '#5B3B1E',
+  'parties': '#BC5727',
+  'performances': '#D2A432',
+  'sweet treats': '#E3B1B8',
+  'outdoors': '#979E6C',
+  'networking': '#6D744A',
+  'coffee': '#4A2F18',
+  'lunch/dinner': '#A54A22',
+  'brunch': '#E4C06A',
+  'activism': '#55613B',
+  'other': '#8B7D6A',
 };
 
 const TYPE_COLOR_FALLBACKS = [
-  '#0ea5e9', '#22c55e', '#f97316', '#a855f7', '#ef4444', '#14b8a6',
-  '#f59e0b', '#06b6d4', '#6366f1', '#ec4899', '#84cc16', '#8b5cf6', '#64748b'
+  '#D18E97', '#BC5727', '#D2A432', '#979E6C', '#5B3B1E', '#E3B1B8',
+  '#E4C06A', '#6D744A', '#A54A22', '#4A2F18', '#7A5230', '#8B7D6A', '#C46F49'
 ];
 const TYPE_DISPLAY = {
   'museums/galleries': 'Museums / galleries',
@@ -1258,7 +1259,7 @@ function typeColors(type) {
   const bg = pickTypeBaseColor(type);
   const border = darkenHex(bg, 0.18);
   const lum = relativeLuminance(bg);
-  const text = lum < 0.5 ? '#ffffff' : '#0f172a';
+  const text = lum < 0.5 ? '#ffffff' : '#2B1D10';
   return { bg, border, text };
 }
 
@@ -2097,6 +2098,40 @@ const LAYER_OTHER = 'other';
 const REAL_LAYER_IDS = [LAYER_MUSEUM_FREE_TIMES, LAYER_CHILD_FRIENDLY, LAYER_DOG_FRIENDLY];
 const LAYER_TOGGLE_ORDER = [...REAL_LAYER_IDS, LAYER_OTHER];
 
+const LAYER_DISPLAY = {
+  [LAYER_MUSEUM_FREE_TIMES]: 'Free museum days',
+  [LAYER_CHILD_FRIENDLY]: 'Child-friendly',
+  [LAYER_DOG_FRIENDLY]: 'Dog-friendly',
+  [LAYER_OTHER]: 'Other',
+};
+
+function layerDisplayName(layerId) {
+  const k = normalizeStr(layerId);
+  return LAYER_DISPLAY[k] || k || 'Other';
+}
+
+function defaultEnabledLayersForView(view) {
+  // Calendar default: hide Free museum days (reduces clutter)
+  // List default: show Free museum days (useful for planning)
+  const out = new Set(LAYER_TOGGLE_ORDER);
+  if (view !== 'list') out.delete(LAYER_MUSEUM_FREE_TIMES);
+  return out;
+}
+
+function enforceMuseumLayerForView(view) {
+  const shouldBeOn = view === 'list';
+  const isOn = state.filters.enabledLayers.has(LAYER_MUSEUM_FREE_TIMES);
+  if (shouldBeOn && !isOn) {
+    state.filters.enabledLayers.add(LAYER_MUSEUM_FREE_TIMES);
+    return true;
+  }
+  if (!shouldBeOn && isOn) {
+    state.filters.enabledLayers.delete(LAYER_MUSEUM_FREE_TIMES);
+    return true;
+  }
+  return false;
+}
+
 function layerBucketForItem(item) {
   const raw = normalizeStr(item?.layer);
   if (raw && REAL_LAYER_IDS.includes(raw)) return raw;
@@ -2795,7 +2830,9 @@ const state = {
     hideRecurring: false,
     types: new Set(),
     neighborhoods: new Set(),
-    enabledLayers: new Set(LAYER_TOGGLE_ORDER),
+    // UX: free museum days are useful in the List, but can overwhelm the Calendar.
+    // Start with them hidden (Calendar default) and auto-toggle by view.
+    enabledLayers: defaultEnabledLayersForView('calendar'),
   },
   editingUnlocked: false,
   calendar: null,
@@ -3280,19 +3317,20 @@ function renderLayers(container) {
 
   for (const layer of LAYER_TOGGLE_ORDER) {
     const on = state.filters.enabledLayers.has(layer);
+    const name = layerDisplayName(layer);
 
     const row = document.createElement('div');
     row.className = 'layer-row' + (on ? '' : ' is-off');
 
     const label = document.createElement('div');
     label.className = 'layer-row__label';
-    label.textContent = layer;
+    label.textContent = name;
 
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'layer-eye';
     btn.setAttribute('aria-pressed', String(on));
-    btn.setAttribute('aria-label', on ? `Hide ${layer}` : `Show ${layer}`);
+    btn.setAttribute('aria-label', on ? `Hide ${name}` : `Show ${name}`);
     btn.innerHTML = on ? ICON_EYE_OPEN_SVG : ICON_EYE_CLOSED_SVG;
     btn.addEventListener('click', () => {
       if (state.filters.enabledLayers.has(layer)) state.filters.enabledLayers.delete(layer);
@@ -3476,7 +3514,23 @@ function computeListRange(now, { mode = 'active' } = {}) {
 
 function renderList() {
   const tbody = $('itemsTableBody');
-  tbody.innerHTML = '';
+  const tableWrap = $('itemsTableWrap');
+  const cardList = $('itemsCardList');
+
+  const useCards = isPhoneLayout() && !!cardList;
+
+  if (tableWrap && cardList) {
+    if (useCards) {
+      hide(tableWrap);
+      show(cardList);
+    } else {
+      show(tableWrap);
+      hide(cardList);
+    }
+  }
+
+  if (useCards) cardList.innerHTML = '';
+  else tbody.innerHTML = '';
 
 const now = new Date();
 const viewingArchive = state.listTab === 'archive';
@@ -3543,6 +3597,163 @@ withSortKeys.sort((a, b) => {
 });
 
   for (const { it } of withSortKeys) {
+    if (useCards) {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      if (it.id === state.selectedId) card.classList.add('is-selected');
+      if (it.done === true) card.classList.add('is-done');
+
+      const top = document.createElement('div');
+      top.className = 'item-card__top';
+
+      const title = document.createElement('div');
+      title.className = 'item-card__title';
+      const tc = typeColors(it.type);
+      const dot = `<span class="dot" style="background:${tc.bg}; border-color:${tc.border}"></span>`;
+      const ticket = it.ticketsRequired ? ticketIconHtml() : '';
+      title.innerHTML = `${dot}${ticket}<span class="item-card__title-text">${escapeHtml(it.title)}</span>`;
+      top.appendChild(title);
+
+      const btnStar = document.createElement('button');
+      btnStar.type = 'button';
+      btnStar.className = 'starbtn' + (it.starred ? ' is-on' : '');
+      btnStar.disabled = state.editingUnlocked !== true;
+      btnStar.textContent = it.starred ? '★' : '☆';
+      btnStar.title = it.starred ? 'Unstar' : 'Star';
+      btnStar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleStar(it.id);
+      });
+      top.appendChild(btnStar);
+
+      card.appendChild(top);
+
+      const whenText = formatWhenForList(it, { now, listRange: dateFilter.active ? listRange : null, mode: viewingArchive ? 'archive' : 'active' });
+      const whenEl = document.createElement('div');
+      whenEl.className = 'item-card__when';
+      whenEl.textContent = whenText;
+      card.appendChild(whenEl);
+
+      const summary = normalizeStr(it.summary);
+      if (summary) {
+        const sumEl = document.createElement('div');
+        sumEl.className = 'item-card__summary';
+        sumEl.textContent = summary;
+        card.appendChild(sumEl);
+      }
+
+      const meta = document.createElement('div');
+      meta.className = 'item-card__meta';
+
+      const typeName = typeDisplayName(it.type) || '';
+      if (typeName) {
+        const t = document.createElement('span');
+        t.className = 'tag';
+        t.textContent = typeName;
+        meta.appendChild(t);
+      }
+
+      const n = normalizeStr(it.neighborhood);
+      if (n) {
+        const t = document.createElement('span');
+        t.className = 'tag';
+        t.textContent = n;
+        meta.appendChild(t);
+      }
+
+      const cost = formatCost(it);
+      if (cost && cost !== '—') {
+        const t = document.createElement('span');
+        t.className = (cost === 'Free') ? 'tag tag--free' : 'tag';
+        t.textContent = cost;
+        meta.appendChild(t);
+      }
+
+      const layer = normalizeStr(it.layer);
+      if (layer) {
+        const t = document.createElement('span');
+        t.className = 'tag';
+        t.textContent = `layer: ${layerDisplayName(layer)}`;
+        meta.appendChild(t);
+      }
+
+      card.appendChild(meta);
+
+      const controls = document.createElement('div');
+      controls.className = 'item-card__controls';
+
+      const committedLabel = document.createElement('label');
+      committedLabel.className = 'checkbox checkbox--inline';
+      const cbCommitted = document.createElement('input');
+      cbCommitted.type = 'checkbox';
+      cbCommitted.checked = it.committed === true;
+      cbCommitted.disabled = state.editingUnlocked !== true;
+      cbCommitted.addEventListener('click', (e) => e.stopPropagation());
+      cbCommitted.addEventListener('change', (e) => {
+        e.stopPropagation();
+        setCommitted(it.id, cbCommitted.checked === true);
+      });
+      const committedText = document.createElement('span');
+      committedText.textContent = 'Committed';
+      committedLabel.appendChild(cbCommitted);
+      committedLabel.appendChild(committedText);
+      controls.appendChild(committedLabel);
+
+      const doneLabel = document.createElement('label');
+      doneLabel.className = 'checkbox checkbox--inline';
+      const cbDone = document.createElement('input');
+      cbDone.type = 'checkbox';
+      cbDone.checked = it.done === true;
+      cbDone.disabled = state.editingUnlocked !== true;
+      cbDone.addEventListener('click', (e) => e.stopPropagation());
+      cbDone.addEventListener('change', (e) => {
+        e.stopPropagation();
+        setDone(it.id, cbDone.checked === true);
+      });
+      const doneText = document.createElement('span');
+      doneText.textContent = 'Done';
+      doneLabel.appendChild(cbDone);
+      doneLabel.appendChild(doneText);
+      controls.appendChild(doneLabel);
+
+      if (state.editingUnlocked === true) {
+        const spacer = document.createElement('div');
+        spacer.className = 'spacer';
+        controls.appendChild(spacer);
+
+        const btnEdit = document.createElement('button');
+        btnEdit.type = 'button';
+        btnEdit.className = 'btn btn--small';
+        btnEdit.textContent = 'Edit';
+        btnEdit.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openEditDialog(it.id);
+        });
+
+        const btnDel = document.createElement('button');
+        btnDel.type = 'button';
+        btnDel.className = 'btn btn--small btn--danger';
+        btnDel.textContent = 'Delete';
+        btnDel.addEventListener('click', (e) => {
+          e.stopPropagation();
+          deleteItem(it.id);
+        });
+
+        controls.appendChild(btnEdit);
+        controls.appendChild(btnDel);
+      }
+
+      card.appendChild(controls);
+
+      card.addEventListener('click', () => {
+        setSelected(it.id);
+        renderList();
+      });
+
+      cardList.appendChild(card);
+      continue;
+    }
+
     const tr = document.createElement('tr');
     if (it.id === state.selectedId) tr.classList.add('is-selected');
     if (it.done === true) tr.classList.add('is-done');
@@ -3675,10 +3886,7 @@ function initCalendar() {
 
   hide(fallback);
 
-  const isPhone = (() => {
-    try { return window.matchMedia && window.matchMedia('(max-width: 720px)').matches; } catch (_) {}
-    return (window.innerWidth || 0) <= 720;
-  })();
+  const isPhone = isPhoneLayout();
 
   const calendar = new FullCalendar.Calendar(calEl, {
     initialView: isPhone ? 'listWeek' : 'timeGridWeek',
@@ -4509,6 +4717,14 @@ function isNarrowLayout() {
   }
 }
 
+function isPhoneLayout() {
+  try {
+    return window.matchMedia && window.matchMedia('(max-width: 720px)').matches;
+  } catch (_) {
+    return (window.innerWidth || 0) <= 720;
+  }
+}
+
 function setFiltersOpen(open) {
   const isOpen = open === true;
 
@@ -4539,8 +4755,18 @@ function toggleFilters() {
 document.addEventListener('DOMContentLoaded', () => {
   updateHeaderHeightVar();
 
+  // Track phone breakpoint so we can swap List layout (table ⇄ cards) on resize.
+  let lastPhoneLayout = isPhoneLayout();
+
   window.addEventListener('resize', () => {
     updateHeaderHeightVar();
+
+    const isPhoneNow = isPhoneLayout();
+    if (isPhoneNow !== lastPhoneLayout) {
+      lastPhoneLayout = isPhoneNow;
+      try { renderList(); } catch (_) {}
+    }
+
     try { state.calendar?.updateSize(); } catch (_) {}
     // If the viewport switches between desktop/mobile widths, reset the filters drawer state.
     try { setFiltersOpen(false); } catch (_) {}
@@ -4827,7 +5053,7 @@ if (tabActive && tabArchive) {
     state.filters.hideRecurring = false;
     state.filters.types.clear();
     state.filters.neighborhoods.clear();
-    state.filters.enabledLayers = new Set(LAYER_TOGGLE_ORDER);
+    state.filters.enabledLayers = defaultEnabledLayersForView(state.view);
 
     $('filterText').value = '';
     const priceEl = $('filterPriceTier');
@@ -4882,7 +5108,7 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
     store.items = (store.items || []).map(normalizeItem);
     // Apply recurring tagging rules right away
     syncSeedAndRecurringTags({ persist: false });
-    state.filters.enabledLayers = new Set(LAYER_TOGGLE_ORDER);
+    state.filters.enabledLayers = defaultEnabledLayersForView(state.view);
     state.selectedId = null;
     closeDetailsDrawer();
     persistAndMaybeSync();
@@ -5083,6 +5309,8 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
 });
 
 function setView(view) {
+  const museumLayerChanged = enforceMuseumLayerForView(view);
+
   state.view = view;
   try { setFiltersOpen(false); } catch (_) {}
 
@@ -5104,4 +5332,6 @@ function setView(view) {
     btnList.classList.add('btn--primary');
     btnCal.classList.remove('btn--primary');
   }
+
+  if (museumLayerChanged) refresh();
 }
