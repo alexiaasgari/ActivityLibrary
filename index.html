@@ -159,7 +159,7 @@
           <div class="helptext">Active shows upcoming + unscheduled. Past events move to Archive. Date/time range filters only affect the list.</div>
         </div>
 
-        <div class="table-wrap">
+        <div id="itemsTableWrap" class="table-wrap">
           <table class="table" id="itemsTable">
             <thead>
               <tr>
@@ -178,6 +178,9 @@
             <tbody id="itemsTableBody"></tbody>
           </table>
         </div>
+
+        <!-- Mobile-friendly list (rendered by JS on small screens) -->
+        <div id="itemsCardList" class="card-list" hidden></div>
       </section>
     </main>
   </div>
