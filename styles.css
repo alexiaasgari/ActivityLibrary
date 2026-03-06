@@ -115,6 +115,55 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(188,87,39,0.35);
+  background: rgba(188,87,39,0.14);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* More menu (mobile) */
+.more { display: none; position: relative; }
+
+.menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 180px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(251,247,238,0.98);
+  box-shadow: 0 18px 46px var(--shadow2);
+  padding: 6px;
+  z-index: 60;
+}
+
+.menu__item {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 12px;
+  padding: 10px 10px;
+  cursor: pointer;
+  font-weight: 650;
+  color: var(--text);
+}
+
+.menu__item:hover {
+  background: rgba(91,59,30,0.06);
+}
+
 /* Mobile filters toggle (hidden on desktop) */
 .btn--filters { display: none; }
 
@@ -157,12 +206,17 @@ a:hover { text-decoration: underline; }
   overflow: auto;
 }
 
+/* List range controls live in the toolbar on desktop; only show this section on phones. */
+#filtersListRange { display: none; }
+
 .main {
   min-width: 0;
   min-height: 0;
   height: 100%;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .panel,
@@ -177,10 +231,59 @@ a:hover { text-decoration: underline; }
 
 .view {
   flex: 1;
-  height: 100%;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+/* Active filters bar */
+.active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(251,247,238,0.86);
+  box-shadow: 0 10px 22px var(--shadow);
+  backdrop-filter: blur(10px);
+}
+
+.active-filters__label {
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-right: 2px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: rgba(251,247,238,0.96);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.chip:hover {
+  box-shadow: 0 10px 18px var(--shadow);
+}
+
+.chip__x {
+  font-weight: 900;
+  opacity: 0.7;
+}
+
+.active-filters__clear {
+  margin-left: auto;
 }
 
 .panel__title-row {
@@ -683,6 +786,18 @@ button:disabled,
   color: #5B3B1E;
 }
 
+.tag--going {
+  border-color: rgba(151,158,108,0.55);
+  background: rgba(151,158,108,0.18);
+  color: #2B1D10;
+}
+
+.tag--done {
+  border-color: rgba(91,59,30,0.28);
+  background: rgba(91,59,30,0.10);
+  color: #2B1D10;
+}
+
 .selected__summary {
   margin: 10px 0;
   color: var(--text);
@@ -724,6 +839,36 @@ body.has-drawer .layout {
   z-index: 40;
   overflow: auto;
   backdrop-filter: blur(10px);
+}
+
+/* List search (mobile-first affordance) */
+.list-search-row { display: none; }
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  background: rgba(251,247,238,0.92);
+  border-radius: 16px;
+  padding: 10px 10px;
+}
+
+.input--search {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.iconbtn--small {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  font-size: 20px;
 }
 
 .drawer__header {
@@ -1079,6 +1224,39 @@ body.has-drawer .layout {
   background: rgba(210,164,50,0.18);
 }
 
+.status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  border: 1px solid rgba(210,164,50,0.45);
+  background: rgba(210,164,50,0.16);
+  font-weight: 900;
+}
+
+.status-cell {
+  text-align: center;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+/* Details: keep the primary actions visible */
+.selected__cta {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  position: sticky;
+  bottom: 0;
+  background: rgba(251,247,238,0.94);
+  backdrop-filter: blur(10px);
+  padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+}
+
 /* Responsive */
 @media (max-width: 980px) {
   /* Keep the "app-like" layout (no page scroll). Use internal scroll areas instead. */
@@ -1101,6 +1279,9 @@ body.has-drawer .layout {
 
   /* Show the Filters toggle button on mobile */
   .btn--filters { display: inline-flex; }
+
+  /* Show the list search affordance on narrow layouts */
+  .list-search-row { display: block; margin-bottom: 10px; }
 
   /* Sidebar becomes an off-canvas drawer */
   .sidebar {
@@ -1165,6 +1346,15 @@ body.has-drawer .layout {
     grid-column: 1 / -1;
   }
 
+  /* Mobile: hide secondary buttons and use the More menu */
+  #btnOpenHelp,
+  #btnOpenSettings {
+    display: none;
+  }
+
+  .more { display: block; grid-column: 1 / -1; }
+  #btnMore { width: 100%; }
+
   /* Prevent iOS Safari zoom-on-focus + improve touch targets */
   .input, .textarea, select { font-size: 16px; }
   .btn { min-height: 44px; }
@@ -1192,6 +1382,35 @@ body.has-drawer .layout {
 
   .card-list {
     padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Hide advanced list-only date/time controls on phones (use Filters ▸ List range instead). */
+  .list-toolbar__left .field--inline,
+  #btnClearListDates,
+  #btnClearListTimes {
+    display: none;
+  }
+
+  #filtersListRange { display: block; }
+
+  /* Details drawer becomes a bottom sheet on phones */
+  .drawer {
+    top: auto;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: min(82vh, 640px);
+    border-left: none;
+    border-top: 1px solid var(--border);
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -18px 42px var(--shadow2);
+  }
+
+  .drawer__header {
+    border-bottom: 1px solid var(--border);
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
   }
 
   /* FullCalendar: smaller toolbar/button sizing so it fits */
