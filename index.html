@@ -21,11 +21,22 @@
     </div>
 
     <div class="header-actions">
-      <button id="btnToggleFilters" class="btn btn--ghost btn--filters" type="button" aria-expanded="false" aria-controls="filtersSidebar">Filters</button>
+      <button id="btnToggleFilters" class="btn btn--ghost btn--filters" type="button" aria-expanded="false" aria-controls="filtersSidebar">
+        Filters <span id="filtersCount" class="badge" aria-label="Active filters" hidden>0</span>
+      </button>
       <button id="btnViewCalendar" class="btn btn--primary" type="button">Calendar</button>
       <button id="btnViewList" class="btn" type="button">List</button>
       <button id="btnOpenHelp" class="btn" type="button">Instructions</button>
       <button id="btnOpenSettings" class="btn" type="button">Settings</button>
+
+      <!-- Mobile: collapse secondary actions into a single menu -->
+      <div class="more">
+        <button id="btnMore" class="btn btn--ghost btn--more" type="button" aria-haspopup="true" aria-expanded="false">More</button>
+        <div id="moreMenu" class="menu" role="menu" aria-label="More" hidden>
+          <button id="menuHelp" class="menu__item" type="button" role="menuitem">Instructions</button>
+          <button id="menuSettings" class="menu__item" type="button" role="menuitem">Settings</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -80,6 +91,41 @@
   </select>
 </label>
 
+        <details id="filtersListRange">
+          <summary class="details-summary">List range</summary>
+          <div class="helptext">Date/time range filters only affect the List view.</div>
+
+          <div class="grid-2" style="margin-top: 8px;">
+            <label class="field">
+              <span class="field__label">From</span>
+              <input id="filterDateFromMobile" class="input" type="date" />
+            </label>
+            <label class="field">
+              <span class="field__label">To</span>
+              <input id="filterDateToMobile" class="input" type="date" />
+            </label>
+          </div>
+          <div class="row" style="gap: 8px; margin-top: 6px;">
+            <button id="btnClearListDatesMobile" class="btn btn--ghost btn--small" type="button">Clear dates</button>
+            <button id="btnPreset7Mobile" class="pill pill--small" type="button">Next 7d</button>
+            <button id="btnPreset30Mobile" class="pill pill--small" type="button">Next 30d</button>
+          </div>
+
+          <div class="grid-2" style="margin-top: 10px;">
+            <label class="field">
+              <span class="field__label">Time from</span>
+              <input id="filterTimeFromMobile" class="input" type="time" />
+            </label>
+            <label class="field">
+              <span class="field__label">Time to</span>
+              <input id="filterTimeToMobile" class="input" type="time" />
+            </label>
+          </div>
+          <div class="row" style="gap: 8px; margin-top: 6px;">
+            <button id="btnClearListTimesMobile" class="btn btn--ghost btn--small" type="button">Clear times</button>
+          </div>
+        </details>
+
 
         <details open>
           <summary class="details-summary">Categories</summary>
@@ -94,19 +140,21 @@
         </details>
 
         <details>
-          <summary class="details-summary">Calendar layers</summary>
+          <summary class="details-summary">Overlays</summary>
           <div id="filterLayers" class="stack"></div>
-          <div class="helptext">Use layers for overlays like museum free hours.</div>
+          <div class="helptext">Optional overlays that can add extra events (e.g., free museum days).</div>
         </details>
 
         <div class="divider"></div>
         <div class="row">
-          <button id="btnApplyFilters" class="btn btn--primary" type="button">Refresh</button>
+          <button id="btnApplyFilters" class="btn btn--primary" type="button">Done</button>
         </div>
       </section>
     </aside>
 
     <main class="main">
+      <div id="activeFiltersBar" class="active-filters" hidden aria-label="Active filters"></div>
+
       <section id="calendarView" class="view">
         <div class="calendar-top">
           <div id="earlyStrip" class="early-strip" hidden></div>
@@ -123,6 +171,12 @@
 
       <section id="listView" class="view" hidden>
         <div class="list-toolbar">
+          <div class="list-search-row">
+            <div class="searchbar" role="search">
+              <input id="listSearch" class="input input--search" type="search" placeholder="Search title, notes, address…" autocomplete="off" />
+              <button id="btnClearListSearch" class="iconbtn iconbtn--small" type="button" aria-label="Clear search">×</button>
+            </div>
+          </div>
           <div class="list-toolbar__row">
             <div class="list-toolbar__left">
 <div class="tabs" role="tablist" aria-label="List tabs">
@@ -164,7 +218,7 @@
             <thead>
               <tr>
                 <th style="width: 56px;" title="Top pick">★</th>
-                <th style="width: 76px;" title="Committed">Commit</th>
+                <th style="width: 76px;" title="Going">Going</th>
                 <th style="width: 56px;" title="Done">Done</th>
                 <th>Title</th>
                 <th>Summary</th>
