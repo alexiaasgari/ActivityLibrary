@@ -3365,6 +3365,43 @@ function renderFilters() {
   const hrEl = $('filterHideRecurring');
   if (hrEl) hrEl.checked = state.filters.hideRecurring !== true;
 
+  // Keep the rest of the filter UI in sync with state (important when filters are changed via chips / programmatically).
+  const textEl = $('filterText');
+  if (textEl && textEl.value !== (state.filters.text || '')) textEl.value = state.filters.text || '';
+
+  const listSearchEl = $('listSearch');
+  if (listSearchEl && listSearchEl.value !== (state.filters.text || '')) listSearchEl.value = state.filters.text || '';
+
+  const df = $('filterDateFrom');
+  const dt = $('filterDateTo');
+  if (df && df.value !== (state.filters.dateFrom || '')) df.value = state.filters.dateFrom || '';
+  if (dt && dt.value !== (state.filters.dateTo || '')) dt.value = state.filters.dateTo || '';
+
+  const tf = $('filterTimeFrom');
+  const tt = $('filterTimeTo');
+  if (tf && tf.value !== (state.filters.timeFrom || '')) tf.value = state.filters.timeFrom || '';
+  if (tt && tt.value !== (state.filters.timeTo || '')) tt.value = state.filters.timeTo || '';
+
+  // Mobile duplicates (List range inside Filters drawer)
+  const dfm = $('filterDateFromMobile');
+  const dtm = $('filterDateToMobile');
+  if (dfm && dfm.value !== (state.filters.dateFrom || '')) dfm.value = state.filters.dateFrom || '';
+  if (dtm && dtm.value !== (state.filters.dateTo || '')) dtm.value = state.filters.dateTo || '';
+
+  const tfm = $('filterTimeFromMobile');
+  const ttm = $('filterTimeToMobile');
+  if (tfm && tfm.value !== (state.filters.timeFrom || '')) tfm.value = state.filters.timeFrom || '';
+  if (ttm && ttm.value !== (state.filters.timeTo || '')) ttm.value = state.filters.timeTo || '';
+
+  const incEl = $('filterIncludeUnscheduled');
+  if (incEl) incEl.checked = state.filters.includeUnscheduled === true;
+
+  const starEl = $('filterStarredOnly');
+  if (starEl) starEl.checked = state.filters.starredOnly === true;
+
+  const hdEl = $('filterHideDone');
+  if (hdEl) hdEl.checked = state.filters.hideDone === true;
+
 }
 
 
@@ -3372,91 +3409,150 @@ function renderSelectedDetails() {
   const el = $('selectedDetails');
   const item = getSelectedItem();
   if (!item) {
-    el.innerHTML = 'Click an event in the calendar, or a row in the list.';
+    el.innerHTML = 'Select an event in the calendar, or tap a row/card in the list.';
     return;
   }
 
+  const unlocked = state.editingUnlocked === true;
+
   const lines = [];
+
+  // Title
   lines.push(`<div class="selected__title">${item.ticketsRequired ? ticketIconHtml() : ''}${escapeHtml(item.title)}</div>`);
 
   if (isRecurringItem(item)) {
     lines.push(`<div class="notice notice--recurring">Recurring event</div>`);
   }
 
+  // Meta tags (fast scan)
   const metaParts = [];
+
+  if (item.starred) metaParts.push(`<span class="tag tag--star">★ Top pick</span>`);
+  if (item.committed === true) metaParts.push(`<span class="tag tag--going">Going</span>`);
+  if (item.done === true) metaParts.push(`<span class="tag tag--done">Done</span>`);
+
   if (normalizeStr(item.type)) metaParts.push(`<span class="tag">${escapeHtml(typeDisplayName(item.type) || item.type)}</span>`);
   if (normalizeStr(item.neighborhood)) metaParts.push(`<span class="tag">${escapeHtml(item.neighborhood)}</span>`);
-  metaParts.push(item.starred ? `<span class="tag tag--star">★ Starred</span>` : '');
 
-  // Status tags (read-only; keeps the UI understandable even when edit mode is locked)
-  if (item.committed === true) metaParts.push(`<span class="tag">Committed</span>`);
-  if (item.done === true) metaParts.push(`<span class="tag">Done</span>`);
+  const bucket = layerBucketForItem(item);
+  if (bucket && bucket !== LAYER_OTHER) metaParts.push(`<span class="tag">${escapeHtml(layerDisplayName(bucket))}</span>`);
 
   const cost = formatCost(item);
   if (cost === 'Free') metaParts.push(`<span class="tag tag--free">Free</span>`);
   else if (cost !== '—') metaParts.push(`<span class="tag">${escapeHtml(cost)}</span>`);
 
-  if (normalizeStr(item.layer)) metaParts.push(`<span class="tag">layer: ${escapeHtml(item.layer)}</span>`);
+  if (item.haveTickets) metaParts.push(`<span class="tag">Have tickets</span>`);
+  else if (item.ticketsRequired) metaParts.push(`<span class="tag">Tickets</span>`);
 
   lines.push(`<div class="selected__meta">${metaParts.filter(Boolean).join(' ')}</div>`);
 
+  // Summary
   if (normalizeStr(item.summary)) {
     lines.push(`<div class="selected__summary">${escapeHtml(item.summary)}</div>`);
   }
 
-  if (normalizeStr(item.address)) {
-    lines.push(`<div class="selected__block"><span class="muted">Address:</span> ${escapeHtml(item.address)}</div>`);
-  }
+  // When
+  const fmtTime = (d) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const sameDay = (a, b) => a && b
+    && a.getFullYear() === b.getFullYear()
+    && a.getMonth() === b.getMonth()
+    && a.getDate() === b.getDate();
 
-  if (normalizeStr(item.start) || (item.dateRange && item.openHours)) {
-    if (item.dateRange && item.openHours) {
-      const dr = item.dateRange;
-      lines.push(`<div class="selected__block"><span class="muted">When:</span> Open hours (${escapeHtml(dr.start)} → ${escapeHtml(dr.end)})</div>`);
-    } else {
-      const win = itemSingleInstanceWindow(item);
-      if (win?.start) {
-        lines.push(`<div class="selected__block"><span class="muted">When:</span> ${escapeHtml(isAllDayDateOnly(item) ? formatShortDate(win.start) : formatShortDateTime(win.start))}</div>`);
+  let whenText = 'Unscheduled';
+  if (item.dateRange && item.openHours) {
+    const dr = item.dateRange;
+    whenText = `Open hours (${normalizeStr(dr.start)} → ${normalizeStr(dr.end)})`;
+  } else if (isRecurringItem(item)) {
+    const next = nextOccurrenceWindow(item, new Date());
+    if (next?.start) {
+      if (isAllDayDateOnly(item)) {
+        whenText = `Next: ${formatShortDate(next.start)}`;
+      } else if (next?.end && sameDay(next.start, next.end)) {
+        whenText = `Next: ${formatShortDateTime(next.start)} – ${fmtTime(next.end)}`;
+      } else if (next?.end) {
+        whenText = `Next: ${formatShortDateTime(next.start)} → ${formatShortDateTime(next.end)}`;
+      } else {
+        whenText = `Next: ${formatShortDateTime(next.start)}`;
       }
     }
   } else {
-    lines.push(`<div class="selected__block"><span class="muted">When:</span> Unscheduled</div>`);
+    const win = itemSingleInstanceWindow(item);
+    if (win?.start) {
+      if (isAllDayDateOnly(item) || win.allDay === true) {
+        whenText = formatShortDate(win.start);
+      } else if (win?.end && sameDay(win.start, win.end)) {
+        whenText = `${formatShortDateTime(win.start)} – ${fmtTime(win.end)}`;
+      } else if (win?.end) {
+        whenText = `${formatShortDateTime(win.start)} → ${formatShortDateTime(win.end)}`;
+      } else {
+        whenText = formatShortDateTime(win.start);
+      }
+    }
   }
 
-  if (normalizeStr(item.rrule)) {
-    lines.push(`<div class="selected__block"><span class="muted">RRULE:</span> ${escapeHtml(item.rrule)}</div>`);
+  lines.push(`<div class="selected__block"><span class="muted">When:</span> ${escapeHtml(whenText)}</div>`);
+
+  // Where
+  const addr = normalizeStr(item.address);
+  const mapsUrl = addr ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}` : '';
+  if (addr) {
+    lines.push(`<div class="selected__block"><span class="muted">Where:</span> ${escapeHtml(addr)}</div>`);
   }
 
+  // Tickets
   if (item.ticketsRequired || normalizeStr(item.ticketsLink) || item.haveTickets) {
     const t = [];
-    if (item.ticketsRequired) t.push('tickets required');
-    if (item.haveTickets) t.push('have tickets');
-    if (normalizeStr(item.ticketsLink)) t.push(`link: <a href="${escapeHtml(item.ticketsLink)}" target="_blank" rel="noreferrer">open</a>`);
+    if (item.ticketsRequired) t.push('Tickets required');
+    if (item.haveTickets) t.push('Have tickets');
+    if (normalizeStr(item.ticketsLink)) {
+      t.push(`<a href="${escapeHtml(item.ticketsLink)}" target="_blank" rel="noreferrer">Open ticket link</a>`);
+    }
     lines.push(`<div class="selected__block"><span class="muted">Tickets:</span> ${t.join(' · ')}</div>`);
   }
 
+  // Notes
   if (normalizeStr(item.notes)) {
     lines.push(`<div class="selected__notes">${escapeHtml(item.notes).replace(/\n/g, '<br/>')}</div>`);
   }
 
-  // Calendar actions (read-only; available to all visitors)
+  // Primary actions (available to everyone)
   const canIcs = hasCalendarPresence(item);
   const googleUrl = buildGoogleCalendarUrl(item);
-  lines.push(`<div class="inline-actions" style="margin-top: 12px;">
-    <button class="btn btn--small" type="button" id="btnSelectedDownloadIcs" ${canIcs ? '' : 'disabled'}>Download .ics</button>
+
+  lines.push(`<div class="selected__cta">
     ${googleUrl
-      ? `<a class="btn btn--small" href="${escapeHtml(googleUrl)}" target="_blank" rel="noreferrer">Add to Google Calendar</a>`
-      : `<button class="btn btn--small" type="button" disabled>Add to Google Calendar</button>`
+      ? `<a class="btn btn--primary" href="${escapeHtml(googleUrl)}" target="_blank" rel="noreferrer">Add to Google Calendar</a>`
+      : `<button class="btn btn--primary" type="button" disabled>Add to Google Calendar</button>`
+    }
+    <button class="btn" type="button" id="btnSelectedDownloadIcs" ${canIcs ? '' : 'disabled'}>Download .ics</button>
+    ${mapsUrl
+      ? `<a class="btn btn--ghost" href="${escapeHtml(mapsUrl)}" target="_blank" rel="noreferrer">Open in Maps</a>`
+      : ''
     }
   </div>`);
 
-  // Edit-only actions (hidden unless unlocked)
-  const unlocked = state.editingUnlocked === true;
+  // More / technical details
+  const moreParts = [];
+  if (normalizeStr(item.rrule)) {
+    moreParts.push(`<div class="selected__block"><span class="muted">Recurrence rule:</span> ${escapeHtml(item.rrule)}</div>`);
+  }
+
+  const rawLayer = normalizeStr(item.layer);
+  if (rawLayer && (bucket === LAYER_OTHER)) {
+    moreParts.push(`<div class="selected__block"><span class="muted">Overlay id:</span> ${escapeHtml(rawLayer)}</div>`);
+  }
+
+  if (moreParts.length > 0) {
+    lines.push(`<details class="selected__block"><summary class="details-summary">More</summary>${moreParts.join('')}</details>`);
+  }
+
+  // Edit-only actions
   if (unlocked) {
     lines.push(`<div class="selected__actions">
       <button class="starbtn" type="button" id="btnSelectedToggleStar" aria-label="${item.starred ? 'Remove top pick' : 'Mark as top pick'}" title="${item.starred ? 'Top pick' : 'Mark as top pick'}">${item.starred ? '★' : '☆'}</button>
       <label class="checkbox checkbox--inline">
         <input id="detailsCommitted" type="checkbox" ${item.committed === true ? 'checked' : ''} />
-        <span>Committed</span>
+        <span>Going</span>
       </label>
       <label class="checkbox checkbox--inline">
         <input id="detailsDone" type="checkbox" ${item.done === true ? 'checked' : ''} />
@@ -3469,6 +3565,7 @@ function renderSelectedDetails() {
 
   el.innerHTML = lines.join('');
 
+  // Primary actions wiring
   const btnIcs = $('btnSelectedDownloadIcs');
   if (btnIcs) {
     btnIcs.addEventListener('click', () => {
@@ -3598,6 +3695,7 @@ withSortKeys.sort((a, b) => {
 
   for (const { it } of withSortKeys) {
     if (useCards) {
+      const unlocked = state.editingUnlocked === true;
       const card = document.createElement('div');
       card.className = 'item-card';
       if (it.id === state.selectedId) card.classList.add('is-selected');
@@ -3614,17 +3712,24 @@ withSortKeys.sort((a, b) => {
       title.innerHTML = `${dot}${ticket}<span class="item-card__title-text">${escapeHtml(it.title)}</span>`;
       top.appendChild(title);
 
-      const btnStar = document.createElement('button');
-      btnStar.type = 'button';
-      btnStar.className = 'starbtn' + (it.starred ? ' is-on' : '');
-      btnStar.disabled = state.editingUnlocked !== true;
-      btnStar.textContent = it.starred ? '★' : '☆';
-      btnStar.title = it.starred ? 'Unstar' : 'Star';
-      btnStar.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleStar(it.id);
-      });
-      top.appendChild(btnStar);
+      if (unlocked) {
+        const btnStar = document.createElement('button');
+        btnStar.type = 'button';
+        btnStar.className = 'starbtn' + (it.starred ? ' is-on' : '');
+        btnStar.textContent = it.starred ? '★' : '☆';
+        btnStar.title = it.starred ? 'Unstar' : 'Star';
+        btnStar.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleStar(it.id);
+        });
+        top.appendChild(btnStar);
+      } else if (it.starred) {
+        const star = document.createElement('span');
+        star.className = 'status-icon';
+        star.title = 'Top pick';
+        star.textContent = '★';
+        top.appendChild(star);
+      }
 
       card.appendChild(top);
 
@@ -3644,6 +3749,28 @@ withSortKeys.sort((a, b) => {
 
       const meta = document.createElement('div');
       meta.className = 'item-card__meta';
+
+      // Guest mode: show status as readable tags (instead of disabled controls)
+      if (!unlocked) {
+        if (it.starred) {
+          const t = document.createElement('span');
+          t.className = 'tag tag--star';
+          t.textContent = 'Top pick';
+          meta.appendChild(t);
+        }
+        if (it.committed === true) {
+          const t = document.createElement('span');
+          t.className = 'tag tag--going';
+          t.textContent = 'Going';
+          meta.appendChild(t);
+        }
+        if (it.done === true) {
+          const t = document.createElement('span');
+          t.className = 'tag tag--done';
+          t.textContent = 'Done';
+          meta.appendChild(t);
+        }
+      }
 
       const typeName = typeDisplayName(it.type) || '';
       if (typeName) {
@@ -3669,54 +3796,52 @@ withSortKeys.sort((a, b) => {
         meta.appendChild(t);
       }
 
-      const layer = normalizeStr(it.layer);
-      if (layer) {
+      const bucket = layerBucketForItem(it);
+      if (bucket && bucket !== LAYER_OTHER) {
         const t = document.createElement('span');
         t.className = 'tag';
-        t.textContent = `layer: ${layerDisplayName(layer)}`;
+        t.textContent = layerDisplayName(bucket);
         meta.appendChild(t);
       }
 
       card.appendChild(meta);
 
-      const controls = document.createElement('div');
-      controls.className = 'item-card__controls';
+      if (unlocked) {
+        const controls = document.createElement('div');
+        controls.className = 'item-card__controls';
 
-      const committedLabel = document.createElement('label');
-      committedLabel.className = 'checkbox checkbox--inline';
-      const cbCommitted = document.createElement('input');
-      cbCommitted.type = 'checkbox';
-      cbCommitted.checked = it.committed === true;
-      cbCommitted.disabled = state.editingUnlocked !== true;
-      cbCommitted.addEventListener('click', (e) => e.stopPropagation());
-      cbCommitted.addEventListener('change', (e) => {
-        e.stopPropagation();
-        setCommitted(it.id, cbCommitted.checked === true);
-      });
-      const committedText = document.createElement('span');
-      committedText.textContent = 'Committed';
-      committedLabel.appendChild(cbCommitted);
-      committedLabel.appendChild(committedText);
-      controls.appendChild(committedLabel);
+        const committedLabel = document.createElement('label');
+        committedLabel.className = 'checkbox checkbox--inline';
+        const cbCommitted = document.createElement('input');
+        cbCommitted.type = 'checkbox';
+        cbCommitted.checked = it.committed === true;
+        cbCommitted.addEventListener('click', (e) => e.stopPropagation());
+        cbCommitted.addEventListener('change', (e) => {
+          e.stopPropagation();
+          setCommitted(it.id, cbCommitted.checked === true);
+        });
+        const committedText = document.createElement('span');
+        committedText.textContent = 'Going';
+        committedLabel.appendChild(cbCommitted);
+        committedLabel.appendChild(committedText);
+        controls.appendChild(committedLabel);
 
-      const doneLabel = document.createElement('label');
-      doneLabel.className = 'checkbox checkbox--inline';
-      const cbDone = document.createElement('input');
-      cbDone.type = 'checkbox';
-      cbDone.checked = it.done === true;
-      cbDone.disabled = state.editingUnlocked !== true;
-      cbDone.addEventListener('click', (e) => e.stopPropagation());
-      cbDone.addEventListener('change', (e) => {
-        e.stopPropagation();
-        setDone(it.id, cbDone.checked === true);
-      });
-      const doneText = document.createElement('span');
-      doneText.textContent = 'Done';
-      doneLabel.appendChild(cbDone);
-      doneLabel.appendChild(doneText);
-      controls.appendChild(doneLabel);
+        const doneLabel = document.createElement('label');
+        doneLabel.className = 'checkbox checkbox--inline';
+        const cbDone = document.createElement('input');
+        cbDone.type = 'checkbox';
+        cbDone.checked = it.done === true;
+        cbDone.addEventListener('click', (e) => e.stopPropagation());
+        cbDone.addEventListener('change', (e) => {
+          e.stopPropagation();
+          setDone(it.id, cbDone.checked === true);
+        });
+        const doneText = document.createElement('span');
+        doneText.textContent = 'Done';
+        doneLabel.appendChild(cbDone);
+        doneLabel.appendChild(doneText);
+        controls.appendChild(doneLabel);
 
-      if (state.editingUnlocked === true) {
         const spacer = document.createElement('div');
         spacer.className = 'spacer';
         controls.appendChild(spacer);
@@ -3741,9 +3866,8 @@ withSortKeys.sort((a, b) => {
 
         controls.appendChild(btnEdit);
         controls.appendChild(btnDel);
+        card.appendChild(controls);
       }
-
-      card.appendChild(controls);
 
       card.addEventListener('click', () => {
         setSelected(it.id);
@@ -3758,51 +3882,71 @@ withSortKeys.sort((a, b) => {
     if (it.id === state.selectedId) tr.classList.add('is-selected');
     if (it.done === true) tr.classList.add('is-done');
 
+    const unlocked = state.editingUnlocked === true;
+
     const tdStar = document.createElement('td');
-    const btnStar = document.createElement('button');
-    btnStar.type = 'button';
-    btnStar.className = 'starbtn' + (it.starred ? ' is-on' : '');
-    btnStar.disabled = state.editingUnlocked !== true;
-    btnStar.textContent = it.starred ? '★' : '☆';
-    btnStar.title = it.starred ? 'Unstar' : 'Star';
-    btnStar.addEventListener('click', (e) => {
-      e.stopPropagation();
-      toggleStar(it.id);
-    });
-    tdStar.appendChild(btnStar);
+    if (unlocked) {
+      const btnStar = document.createElement('button');
+      btnStar.type = 'button';
+      btnStar.className = 'starbtn' + (it.starred ? ' is-on' : '');
+      btnStar.textContent = it.starred ? '★' : '☆';
+      btnStar.title = it.starred ? 'Unstar' : 'Star';
+      btnStar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleStar(it.id);
+      });
+      tdStar.appendChild(btnStar);
+    } else {
+      tdStar.className = 'status-cell';
+      tdStar.textContent = it.starred ? '★' : '';
+      tdStar.title = it.starred ? 'Top pick' : '';
+    }
 
     const tdCommitted = document.createElement('td');
-    const cbCommitted = document.createElement('input');
-    cbCommitted.type = 'checkbox';
-    cbCommitted.checked = it.committed === true;
-    cbCommitted.disabled = state.editingUnlocked !== true;
-    cbCommitted.title = it.committed === true ? 'Committed' : 'Mark committed';
-    cbCommitted.addEventListener('click', (e) => e.stopPropagation());
-    cbCommitted.addEventListener('change', (e) => {
-      e.stopPropagation();
-      setCommitted(it.id, cbCommitted.checked === true);
-    });
-    tdCommitted.appendChild(cbCommitted);
+    if (unlocked) {
+      const cbCommitted = document.createElement('input');
+      cbCommitted.type = 'checkbox';
+      cbCommitted.checked = it.committed === true;
+      cbCommitted.title = it.committed === true ? 'Going' : 'Mark going';
+      cbCommitted.addEventListener('click', (e) => e.stopPropagation());
+      cbCommitted.addEventListener('change', (e) => {
+        e.stopPropagation();
+        setCommitted(it.id, cbCommitted.checked === true);
+      });
+      tdCommitted.appendChild(cbCommitted);
+    } else {
+      tdCommitted.className = 'status-cell';
+      tdCommitted.textContent = it.committed === true ? '☑' : '';
+      tdCommitted.title = it.committed === true ? 'Going' : '';
+    }
 
     const tdDone = document.createElement('td');
-    const cbDone = document.createElement('input');
-    cbDone.type = 'checkbox';
-    cbDone.checked = it.done === true;
-    cbDone.disabled = state.editingUnlocked !== true;
-    cbDone.title = it.done === true ? 'Done' : 'Mark done';
-    cbDone.addEventListener('click', (e) => e.stopPropagation());
-    cbDone.addEventListener('change', (e) => {
-      e.stopPropagation();
-      setDone(it.id, cbDone.checked === true);
-    });
-    tdDone.appendChild(cbDone);
+    if (unlocked) {
+      const cbDone = document.createElement('input');
+      cbDone.type = 'checkbox';
+      cbDone.checked = it.done === true;
+      cbDone.title = it.done === true ? 'Done' : 'Mark done';
+      cbDone.addEventListener('click', (e) => e.stopPropagation());
+      cbDone.addEventListener('change', (e) => {
+        e.stopPropagation();
+        setDone(it.id, cbDone.checked === true);
+      });
+      tdDone.appendChild(cbDone);
+    } else {
+      tdDone.className = 'status-cell';
+      tdDone.textContent = it.done === true ? '✓' : '';
+      tdDone.title = it.done === true ? 'Done' : '';
+    }
 
     const tdTitle = document.createElement('td');
     const tc = typeColors(it.type);
     const dot = `<span class="dot" style="background:${tc.bg}; border-color:${tc.border}"></span>`;
     const ticket = it.ticketsRequired ? ticketIconHtml() : '';
-    tdTitle.innerHTML = `<div class="cell-title">${dot}${ticket}<span>${escapeHtml(it.title)}</span></div>` +
-      (normalizeStr(it.layer) ? `<div class="helptext">layer: ${escapeHtml(it.layer)}</div>` : '');
+    const bucket = layerBucketForItem(it);
+    const overlayLine = (bucket && bucket !== LAYER_OTHER)
+      ? `<div class="helptext">Overlay: ${escapeHtml(layerDisplayName(bucket))}</div>`
+      : '';
+    tdTitle.innerHTML = `<div class="cell-title">${dot}${ticket}<span>${escapeHtml(it.title)}</span></div>` + overlayLine;
 
     const tdSummary = document.createElement('td');
     tdSummary.textContent = normalizeStr(it.summary) || '';
@@ -3889,7 +4033,8 @@ function initCalendar() {
   const isPhone = isPhoneLayout();
 
   const calendar = new FullCalendar.Calendar(calEl, {
-    initialView: isPhone ? 'listWeek' : 'timeGridWeek',
+    // Phone default: Day view (readable, avoids the cramped week grid).
+    initialView: isPhone ? 'timeGridDay' : 'timeGridWeek',
     nowIndicator: true,
     height: '100%',
     selectable: false,
@@ -3898,7 +4043,7 @@ function initCalendar() {
     scrollTime: state.calendarSettings.condenseEarlyHours ? '08:00:00' : '00:00:00',
     datesSet: (info) => {
       try {
-        updateEarlyStrip(info.start, info.end);
+        updateEarlyStrip(info.start, info.end, info.view?.type || '');
       } catch (_) {}
     },
     eventClick: (info) => {
@@ -3981,7 +4126,8 @@ function initCalendar() {
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: isPhone ? 'dayGridMonth,timeGridDay,listWeek' : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      // Calendar should be Day / Week / Month only (no calendar-list view).
+      right: isPhone ? 'timeGridDay,timeGridWeek,dayGridMonth' : 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     events: (fetchInfo, successCallback, failureCallback) => {
       try {
@@ -4014,7 +4160,7 @@ function refreshEarlyStrip() {
   if (!state.calendar) return;
   const view = state.calendar.view;
   if (!view) return;
-  updateEarlyStrip(view.activeStart, view.activeEnd);
+  updateEarlyStrip(view.activeStart, view.activeEnd, view.type || '');
 }
 
 function formatTimeOnly(d) {
@@ -4066,9 +4212,16 @@ function computeEarlyEvents(rangeStart, rangeEnd) {
   return out;
 }
 
-function updateEarlyStrip(rangeStart, rangeEnd) {
+function updateEarlyStrip(rangeStart, rangeEnd, viewType = '') {
   const el = $('earlyStrip');
   if (!el) return;
+
+  // Only relevant for time grid views.
+  if (!String(viewType || '').startsWith('timeGrid')) {
+    el.hidden = true;
+    el.innerHTML = '';
+    return;
+  }
 
   if (!state.calendarSettings.condenseEarlyHours) {
     el.hidden = true;
@@ -4628,8 +4781,215 @@ function parseIcs(text, { defaultLayer = '' } = {}) {
 
 // ---------- Refresh (re-render all) ----------
 
+function buildActiveFilterChips() {
+  const f = state.filters;
+  const chips = [];
+
+  const text = normalizeStr(f.text);
+  if (text) {
+    chips.push({
+      label: `Search: ${text.length > 26 ? text.slice(0, 26) + '…' : text}`,
+      onRemove: () => {
+        state.filters.text = '';
+        refresh();
+      },
+    });
+  }
+
+  if (f.starredOnly === true) {
+    chips.push({
+      label: 'Top picks',
+      onRemove: () => {
+        state.filters.starredOnly = false;
+        refresh();
+      },
+    });
+  }
+
+  if (f.hideDone === true) {
+    chips.push({
+      label: 'Hide done',
+      onRemove: () => {
+        state.filters.hideDone = false;
+        refresh();
+      },
+    });
+  }
+
+  // List-only filters (calendar has its own date navigation and doesn't show unscheduled items)
+  if (state.view === 'list') {
+    if (f.includeUnscheduled !== true) {
+      chips.push({
+        label: 'Hide unscheduled',
+        onRemove: () => {
+          state.filters.includeUnscheduled = true;
+          refresh();
+        },
+      });
+    }
+  }
+
+  if (f.hideRecurring === true) {
+    chips.push({
+      label: 'Hide recurring',
+      onRemove: () => {
+        state.filters.hideRecurring = false;
+        refresh();
+      },
+    });
+  }
+
+  const tier = normalizeStr(f.priceTier || 'all');
+  if (tier && tier !== 'all') {
+    chips.push({
+      label: `Price: ${tier[0].toUpperCase()}${tier.slice(1)}`,
+      onRemove: () => {
+        state.filters.priceTier = 'all';
+        refresh();
+      },
+    });
+  }
+
+  if (state.view === 'list') {
+    if (normalizeStr(f.dateFrom) || normalizeStr(f.dateTo)) {
+      const a = normalizeStr(f.dateFrom) || '…';
+      const b = normalizeStr(f.dateTo) || '…';
+      chips.push({
+        label: `Dates: ${a} → ${b}`,
+        onRemove: () => {
+          state.filters.dateFrom = '';
+          state.filters.dateTo = '';
+          refresh();
+        },
+      });
+    }
+
+    if (normalizeStr(f.timeFrom) || normalizeStr(f.timeTo)) {
+      const a = normalizeStr(f.timeFrom) || '…';
+      const b = normalizeStr(f.timeTo) || '…';
+      chips.push({
+        label: `Times: ${a} → ${b}`,
+        onRemove: () => {
+          state.filters.timeFrom = '';
+          state.filters.timeTo = '';
+          refresh();
+        },
+      });
+    }
+  }
+
+  for (const t of Array.from(f.types)) {
+    chips.push({
+      label: `Category: ${typeDisplayName(t) || t}`,
+      onRemove: () => {
+        state.filters.types.delete(t);
+        refresh();
+      },
+    });
+  }
+
+  for (const n of Array.from(f.neighborhoods)) {
+    chips.push({
+      label: `Neighborhood: ${n}`,
+      onRemove: () => {
+        state.filters.neighborhoods.delete(n);
+        refresh();
+      },
+    });
+  }
+
+  // Overlays: show only deviations from the default set for the current view.
+  try {
+    const def = defaultEnabledLayersForView(state.view);
+    for (const layer of def) {
+      if (!state.filters.enabledLayers.has(layer)) {
+        chips.push({
+          label: `Hidden: ${layerDisplayName(layer)}`,
+          onRemove: () => {
+            state.filters.enabledLayers.add(layer);
+            refresh();
+          },
+        });
+      }
+    }
+    for (const layer of state.filters.enabledLayers) {
+      if (!def.has(layer)) {
+        chips.push({
+          label: `Shown: ${layerDisplayName(layer)}`,
+          onRemove: () => {
+            state.filters.enabledLayers.delete(layer);
+            refresh();
+          },
+        });
+      }
+    }
+  } catch (_) {}
+
+  return chips;
+}
+
+function renderActiveFiltersBar() {
+  const bar = $('activeFiltersBar');
+  const countBadge = $('filtersCount');
+  if (!bar && !countBadge) return;
+
+  const chips = buildActiveFilterChips();
+
+  if (countBadge) {
+    countBadge.textContent = String(chips.length);
+    countBadge.hidden = chips.length === 0;
+  }
+
+  if (!bar) return;
+  if (chips.length === 0) {
+    bar.hidden = true;
+    bar.innerHTML = '';
+    return;
+  }
+
+  bar.hidden = false;
+  bar.innerHTML = '';
+
+  const label = document.createElement('span');
+  label.className = 'active-filters__label';
+  label.textContent = 'Active';
+  bar.appendChild(label);
+
+  for (const ch of chips) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip';
+    btn.setAttribute('aria-label', `Remove filter: ${ch.label}`);
+
+    const text = document.createElement('span');
+    text.textContent = ch.label;
+    btn.appendChild(text);
+
+    const x = document.createElement('span');
+    x.className = 'chip__x';
+    x.textContent = '×';
+    btn.appendChild(x);
+
+    btn.addEventListener('click', () => {
+      try { ch.onRemove?.(); } catch (_) {}
+    });
+    bar.appendChild(btn);
+  }
+
+  const clear = document.createElement('button');
+  clear.type = 'button';
+  clear.className = 'linkbtn active-filters__clear';
+  clear.textContent = 'Clear all';
+  clear.addEventListener('click', () => {
+    const btn = $('btnClearFilters');
+    if (btn) btn.click();
+  });
+  bar.appendChild(clear);
+}
+
 function refresh() {
   renderFilters();
+  renderActiveFiltersBar();
   renderList();
   renderSelectedDetails();
   refreshCalendar();
@@ -4806,6 +5166,62 @@ document.addEventListener('DOMContentLoaded', () => {
       try { $('helpDialog')?.showModal(); } catch (_) {}
     });
   }
+
+  // More menu (mobile)
+  const moreBtn = $('btnMore');
+  const moreMenu = $('moreMenu');
+  const moreWrap = moreBtn ? moreBtn.closest('.more') : null;
+  const closeMoreMenu = () => {
+    if (!moreMenu || !moreBtn) return;
+    moreMenu.hidden = true;
+    moreBtn.setAttribute('aria-expanded', 'false');
+  };
+  const toggleMoreMenu = () => {
+    if (!moreMenu || !moreBtn) return;
+    const next = moreMenu.hidden === true ? false : true;
+    moreMenu.hidden = next;
+    moreBtn.setAttribute('aria-expanded', next ? 'false' : 'true');
+  };
+
+  if (moreBtn && moreMenu) {
+    moreBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMoreMenu();
+    });
+  }
+
+  const menuHelp = $('menuHelp');
+  if (menuHelp) {
+    menuHelp.addEventListener('click', () => {
+      closeMoreMenu();
+      try { $('helpDialog')?.showModal(); } catch (_) {}
+    });
+  }
+  const menuSettings = $('menuSettings');
+  if (menuSettings) {
+    menuSettings.addEventListener('click', () => {
+      closeMoreMenu();
+      try {
+        const errEl = $('editModeError');
+        if (errEl) hide(errEl);
+        const pwd = $('editModePassword');
+        if (pwd) pwd.value = '';
+      } catch (_) {}
+      try { $('settingsDialog')?.showModal(); } catch (_) {}
+    });
+  }
+
+  if (moreWrap) {
+    document.addEventListener('click', (e) => {
+      if (moreMenu && moreMenu.hidden !== true) {
+        if (!moreWrap.contains(e.target)) closeMoreMenu();
+      }
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMoreMenu();
+  });
 // List tabs (Active / Archive)
 const tabActive = $('tabListActive');
 const tabArchive = $('tabListArchive');
@@ -4895,9 +5311,38 @@ if (tabActive && tabArchive) {
 
   // Filters
   $('filterText').addEventListener('input', (e) => {
-    state.filters.text = e.target.value || '';
+    const v = e.target.value || '';
+    state.filters.text = v;
+    const ls = $('listSearch');
+    if (ls && ls.value !== v) ls.value = v;
     refresh();
   });
+
+  // Mobile list view: first-class search field (mirrors filter text)
+  const listSearchEl = $('listSearch');
+  if (listSearchEl) {
+    listSearchEl.addEventListener('input', (e) => {
+      const v = e.target.value || '';
+      state.filters.text = v;
+      const ft = $('filterText');
+      if (ft && ft.value !== v) ft.value = v;
+      refresh();
+    });
+  }
+
+  const clearListSearchBtn = $('btnClearListSearch');
+  if (clearListSearchBtn) {
+    clearListSearchBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      state.filters.text = '';
+      refresh();
+      const ls = $('listSearch');
+      if (ls) {
+        ls.value = '';
+        try { ls.focus(); } catch (_) {}
+      }
+    });
+  }
 
   $('btnApplyFilters').addEventListener('click', () => {
     refresh();
@@ -4917,10 +5362,26 @@ if (tabActive && tabArchive) {
     refresh();
   });
 
+  const dateFromMobileEl = $('filterDateFromMobile');
+  if (dateFromMobileEl) {
+    dateFromMobileEl.addEventListener('change', (e) => {
+      state.filters.dateFrom = e.target.value || '';
+      refresh();
+    });
+  }
+
   $('filterDateTo').addEventListener('change', (e) => {
     state.filters.dateTo = e.target.value || '';
     refresh();
   });
+
+  const dateToMobileEl = $('filterDateToMobile');
+  if (dateToMobileEl) {
+    dateToMobileEl.addEventListener('change', (e) => {
+      state.filters.dateTo = e.target.value || '';
+      refresh();
+    });
+  }
 
   const timeFromEl = $('filterTimeFrom');
   if (timeFromEl) {
@@ -4930,9 +5391,25 @@ if (tabActive && tabArchive) {
     });
   }
 
+  const timeFromMobileEl = $('filterTimeFromMobile');
+  if (timeFromMobileEl) {
+    timeFromMobileEl.addEventListener('change', (e) => {
+      state.filters.timeFrom = e.target.value || '';
+      refresh();
+    });
+  }
+
   const timeToEl = $('filterTimeTo');
   if (timeToEl) {
     timeToEl.addEventListener('change', (e) => {
+      state.filters.timeTo = e.target.value || '';
+      refresh();
+    });
+  }
+
+  const timeToMobileEl = $('filterTimeToMobile');
+  if (timeToMobileEl) {
+    timeToMobileEl.addEventListener('change', (e) => {
       state.filters.timeTo = e.target.value || '';
       refresh();
     });
@@ -4989,6 +5466,45 @@ if (tabActive && tabArchive) {
       $('filterDateFrom').value = from;
       $('filterDateTo').value = to;
       refresh();
+    });
+  }
+
+  // Mobile equivalents (inside Filters ▸ List range)
+  const btnClearDatesMobile = $('btnClearListDatesMobile');
+  if (btnClearDatesMobile) {
+    btnClearDatesMobile.addEventListener('click', () => {
+      if (btnClearDates) btnClearDates.click();
+      else {
+        state.filters.dateFrom = '';
+        state.filters.dateTo = '';
+        refresh();
+      }
+    });
+  }
+
+  const btnClearTimesMobile = $('btnClearListTimesMobile');
+  if (btnClearTimesMobile) {
+    btnClearTimesMobile.addEventListener('click', () => {
+      if (btnClearTimes) btnClearTimes.click();
+      else {
+        state.filters.timeFrom = '';
+        state.filters.timeTo = '';
+        refresh();
+      }
+    });
+  }
+
+  const btnPreset7Mobile = $('btnPreset7Mobile');
+  if (btnPreset7Mobile) {
+    btnPreset7Mobile.addEventListener('click', () => {
+      if (btnPreset7) btnPreset7.click();
+    });
+  }
+
+  const btnPreset30Mobile = $('btnPreset30Mobile');
+  if (btnPreset30Mobile) {
+    btnPreset30Mobile.addEventListener('click', () => {
+      if (btnPreset30) btnPreset30.click();
     });
   }
 
@@ -5309,7 +5825,7 @@ $('btnDownloadSeedJs').addEventListener('click', () => {
 });
 
 function setView(view) {
-  const museumLayerChanged = enforceMuseumLayerForView(view);
+  enforceMuseumLayerForView(view);
 
   state.view = view;
   try { setFiltersOpen(false); } catch (_) {}
@@ -5333,5 +5849,6 @@ function setView(view) {
     btnCal.classList.remove('btn--primary');
   }
 
-  if (museumLayerChanged) refresh();
+  // Re-render so view-specific defaults (e.g., overlays + list-only chips) stay in sync.
+  refresh();
 }
