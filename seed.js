@@ -1,8 +1,40 @@
 // Auto-generated seed data from locally stored items
 window.ACTIVITY_VAULT_SEED = {
   "schemaVersion": 1,
-  "generatedAt": "2026-02-07T20:55:03.904Z",
+  "generatedAt": "2026-03-11T15:32:58.379Z",
   "items": [
+    {
+      "id": "0cd578f5-feef-47f4-b7e8-70584fe7bf3e",
+      "tags": [],
+      "currency": "USD",
+      "source": {
+        "kind": "manual",
+        "createdAt": "2026-03-03T19:42:27.439Z"
+      },
+      "title": "delete",
+      "summary": "",
+      "type": "",
+      "neighborhood": "",
+      "address": "",
+      "priceTier": "free",
+      "isFree": true,
+      "cost": 0,
+      "starred": false,
+      "start": null,
+      "end": null,
+      "allDay": false,
+      "rrule": null,
+      "exdate": [],
+      "dateRange": null,
+      "openHours": null,
+      "layer": "",
+      "ticketsRequired": false,
+      "haveTickets": false,
+      "committed": false,
+      "done": false,
+      "ticketsLink": "",
+      "notes": ""
+    },
     {
       "id": "049e242fc5e7",
       "title": "cruising",
@@ -654,7 +686,9 @@ window.ACTIVITY_VAULT_SEED = {
       "title": "the woods",
       "summary": "",
       "type": "other",
-      "tags": [],
+      "tags": [
+        "recurring"
+      ],
       "neighborhood": "",
       "cost": null,
       "currency": "USD",
@@ -726,7 +760,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "",
       "cost": 0,
@@ -763,7 +798,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Chelsea",
       "cost": 0,
@@ -800,7 +836,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Financial District",
       "cost": 0,
@@ -837,7 +874,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "East Harlem",
       "cost": 0,
@@ -874,7 +912,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Chelsea",
       "cost": 0,
@@ -911,7 +950,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Upper East",
       "cost": 0,
@@ -948,7 +988,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Midtown West",
       "cost": 0,
@@ -985,7 +1026,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Chelsea",
       "cost": 0,
@@ -1022,7 +1064,8 @@ window.ACTIVITY_VAULT_SEED = {
       "type": "museums/galleries",
       "tags": [
         "layer",
-        "free"
+        "free",
+        "recurring"
       ],
       "neighborhood": "Murray Hill",
       "cost": 0,
@@ -1169,7 +1212,9 @@ window.ACTIVITY_VAULT_SEED = {
       "starred": false,
       "notes": "Free Fridays run 5–8 PM. Reservations required; tickets released in advance.",
       "layer": "museumFreeTimes",
-      "tags": [],
+      "tags": [
+        "recurring"
+      ],
       "currency": "USD",
       "source": {
         "kind": "web",
@@ -1203,7 +1248,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "contemporary art",
         "free",
-        "bronx"
+        "bronx",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1266,7 +1312,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "animals",
         "family",
-        "nature"
+        "nature",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-28T10:00",
@@ -1306,7 +1353,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "botanical",
         "nature",
-        "garden"
+        "garden",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-28T10:00",
@@ -1346,7 +1394,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "garden",
         "hudson river",
-        "views"
+        "views",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-29T10:00",
@@ -1386,7 +1435,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "contemporary art",
         "free",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1448,7 +1498,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "nature",
         "winter",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1503,7 +1554,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "museumFreeTimes",
       "tags": [
         "nature",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-04-01T15:00",
@@ -1541,7 +1593,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "museumFreeTimes",
       "tags": [
         "nature",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-04-05T09:00",
@@ -1580,7 +1633,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "film",
         "interactive",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-29T14:00",
@@ -1619,7 +1673,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "sculpture",
         "peaceful",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-02-06T10:00",
@@ -1658,7 +1713,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "science",
         "kids",
-        "interactive"
+        "interactive",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-30T14:00",
@@ -1697,7 +1753,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "panorama",
         "art",
-        "queens"
+        "queens",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1759,7 +1816,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "aquarium",
         "animals",
-        "coney island"
+        "coney island",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-28T15:00",
@@ -1798,7 +1856,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "kids",
         "interactive",
-        "family"
+        "family",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-29T14:00",
@@ -1837,7 +1896,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "after-hours",
         "music",
-        "art"
+        "art",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-02-07T17:00",
@@ -1876,7 +1936,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "garden",
         "winter",
-        "nature"
+        "nature",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1930,7 +1991,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "science",
         "dinosaurs",
-        "history"
+        "history",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -1987,7 +2049,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "synagogue",
         "history",
-        "architecture"
+        "architecture",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-26T10:00",
@@ -2026,7 +2089,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "fine art",
         "mansion",
-        "classical"
+        "classical",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-28T13:30",
@@ -2065,7 +2129,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "art",
         "history",
-        "classic"
+        "classic",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -2128,7 +2193,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "medieval",
         "gardens",
-        "architecture"
+        "architecture",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -2184,7 +2250,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "latino art",
         "culture",
-        "east harlem"
+        "east harlem",
+        "recurring"
       ],
       "currency": "USD",
       "dateRange": {
@@ -2238,7 +2305,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "modern art",
         "architecture",
-        "landmark"
+        "landmark",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-25T16:00",
@@ -3823,7 +3891,8 @@ window.ACTIVITY_VAULT_SEED = {
         "farmers-market",
         "local-produce",
         "sustainable",
-        "community"
+        "community",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-31T08:00",
@@ -4058,7 +4127,8 @@ window.ACTIVITY_VAULT_SEED = {
       "tags": [
         "fiber arts",
         "Palestine",
-        "solidarity"
+        "solidarity",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-12T18:00",
@@ -4090,7 +4160,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-02-09T18:00",
@@ -4122,7 +4193,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-03-09T18:00",
@@ -4154,7 +4226,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-04-13T18:00",
@@ -4186,7 +4259,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-05-11T18:00",
@@ -4218,7 +4292,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-06-08T18:00",
@@ -4250,7 +4325,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-07-13T18:00",
@@ -4282,7 +4358,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-08-10T18:00",
@@ -4314,7 +4391,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-09-14T18:00",
@@ -4346,7 +4424,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-10-12T18:00",
@@ -4378,7 +4457,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-11-09T18:00",
@@ -4410,7 +4490,8 @@ window.ACTIVITY_VAULT_SEED = {
       "layer": "personalMeetups",
       "tags": [
         "fiber arts",
-        "Palestine"
+        "Palestine",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-12-14T18:00",
@@ -5904,7 +5985,8 @@ window.ACTIVITY_VAULT_SEED = {
         "art",
         "night-museum",
         "drinks",
-        "culture"
+        "culture",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-30T17:30",
@@ -5942,7 +6024,8 @@ window.ACTIVITY_VAULT_SEED = {
         "art",
         "free-friday",
         "midtown",
-        "date-night"
+        "date-night",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-01-30T17:30",
@@ -7380,7 +7463,8 @@ window.ACTIVITY_VAULT_SEED = {
         "jazz",
         "caribbean diaspora",
         "dancing",
-        "community"
+        "community",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-02-12T19:00",
@@ -7418,7 +7502,8 @@ window.ACTIVITY_VAULT_SEED = {
         "soul",
         "hip-hop",
         "brooklyn",
-        "caribbean"
+        "caribbean",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-03-12T19:00",
@@ -7456,7 +7541,8 @@ window.ACTIVITY_VAULT_SEED = {
         "steel pan",
         "caribbean",
         "dancefloor",
-        "brooklyn culture"
+        "brooklyn culture",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-03-19T19:00",
@@ -7493,7 +7579,8 @@ window.ACTIVITY_VAULT_SEED = {
         "funk",
         "latin fusion",
         "caribbean",
-        "live band"
+        "live band",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-04-02T19:00",
@@ -7530,7 +7617,8 @@ window.ACTIVITY_VAULT_SEED = {
         "latin soul",
         "electronic",
         "caribbean",
-        "multi-lingual"
+        "multi-lingual",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-04-16T19:00",
@@ -7567,7 +7655,8 @@ window.ACTIVITY_VAULT_SEED = {
         "blues",
         "rock",
         "caribbean diaspora",
-        "live music"
+        "live music",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-05-07T19:00",
@@ -7619,11 +7708,13 @@ window.ACTIVITY_VAULT_SEED = {
         ],
         "retrievedAt": "2026-02-07T18:15:00Z"
       },
-      "exdate": [],
       "isFree": true,
-      "committed": false,
+      "cost": 0,
+      "allDay": false,
+      "rrule": null,
+      "exdate": [],
       "done": false,
-      "cost": 0
+      "committed": false
     },
     {
       "id": "av_glam-slam-love-hurts_20260214_bushwick",
@@ -7903,7 +7994,8 @@ window.ACTIVITY_VAULT_SEED = {
         "MoMA",
         "member-exclusive",
         "morning",
-        "art museum"
+        "art museum",
+        "recurring"
       ],
       "currency": "USD",
       "start": "2026-02-07T09:30:00-05:00",
@@ -8111,49 +8203,6 @@ window.ACTIVITY_VAULT_SEED = {
       "done": false
     },
     {
-  "id": "av_stoner_stoplight_20260219_bushwick",
-  "title": "Dank Dykes Presents: Stoner Stoplight",
-  "type": "parties",
-  "summary": "A queer cannabis social mixer featuring a stoplight theme for meeting new people, hosted by Baileigh Jane & Aly Hassell.",
-  "priceTier": "free",
-  "starred": false,
-  "ticketsRequired": false,
-  "ticketsLink": "",
-  "haveTickets": false,
-  "address": "1157 Myrtle Ave, Brooklyn, NY 11206",
-  "neighborhood": "Bushwick",
-  "notes": "Event by @dankdykes_ at Boyfriend Co-op. Includes keywords: queer, lesbian-owned space, cannabis-friendly, social mixer, 21+, community event. Hosted by Baileigh Jane and Aly Hassell.",
-  "layer": "queerSocials",
-  "tags": [
-    "queer",
-    "cannabis",
-    "nightlife",
-    "lesbian",
-    "social",
-    "420-friendly"
-  ],
-  "currency": "USD",
-  "start": "2026-02-19T21:00",
-  "end": "2026-02-20T00:00",
-  "source": {
-    "kind": "web",
-    "urls": [
-      "https://boyfriend.coop/",
-      "https://dankdykes.com/",
-      "https://www.postcard.inc/places/boyfriend-co-op-new-york-Neryak23Mc_"
-    ],
-    "retrievedAt": "2026-02-07T18:15:00Z"
-  },
-  "isFree": true,
-  "cost": 0,
-  "allDay": false,
-  "rrule": null,
-  "exdate": [],
-  "done": false,
-  "committed": false
-},
-
-    {
       "id": "av_moma-member-previews-marcel-duchamp_20260409_midtown",
       "title": "Member Previews: Marcel Duchamp",
       "type": "museums/galleries",
@@ -8201,9 +8250,1514 @@ window.ACTIVITY_VAULT_SEED = {
       "isFree": false,
       "committed": false,
       "done": false
+    },
+    {
+      "id": "av_purgatory_craft_night_20260302_bushwick",
+      "title": "Craft Night at Purgatory",
+      "type": "other",
+      "summary": "Weekly community craft night in the downstairs space at Purgatory.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Downstairs at Purgatory. Layer assigned: personalMeetups.",
+      "layer": "personalMeetups",
+      "tags": [
+        "crafting",
+        "community",
+        "free",
+        "diy",
+        "purgatory",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-03-02T19:00",
+      "end": "2026-03-02T22:00",
+      "rrule": "FREQ=WEEKLY;BYDAY=MO",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://dice.fm/venue/purgatory-kmwp"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_purgatory_karaoke_20260302_bushwick",
+      "title": "Free Karaoke at Purgatory",
+      "type": "nightlife",
+      "summary": "Weekly free karaoke night in the downstairs bar at Purgatory.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Downstairs at Purgatory. Layer assigned: nightlifeLayer.",
+      "layer": "nightlifeLayer",
+      "tags": [
+        "karaoke",
+        "singing",
+        "free",
+        "nightlife",
+        "purgatory",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-03-02T22:00",
+      "end": "2026-03-03T02:00",
+      "rrule": "FREQ=WEEKLY;BYDAY=MO",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://dice.fm/venue/purgatory-kmwp"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_purgatory_video_game_craft_club_20260303_bushwick",
+      "title": "Video Game + Craft Club at Purgatory",
+      "type": "other",
+      "summary": "A hybrid social club for gamers and crafters at Purgatory.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Downstairs at Purgatory. Layer assigned: personalMeetups.",
+      "layer": "personalMeetups",
+      "tags": [
+        "gaming",
+        "crafting",
+        "community",
+        "free",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-03T19:00",
+      "end": "2026-03-03T22:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://donyc.com/venues/purgatory"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_purgatory_cam_barnes_20260303_bushwick",
+      "title": "Cam Barnes, Signal Coast, and th3prism at Purgatory",
+      "type": "performances",
+      "summary": "Live indie and alternative music performance at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Live music at Purgatory. Layer assigned: liveMusic.",
+      "layer": "liveMusic",
+      "tags": [
+        "live music",
+        "indie",
+        "performance",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-03T20:00",
+      "end": "2026-03-03T23:30",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.jambase.com/show/signal-coast-purgatory-20260303"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_body_and_music_20260304_bushwick",
+      "title": "The Body and Music at Purgatory",
+      "type": "performances",
+      "summary": "An experimental performance blending physical movement and sound at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/event/avp97q-the-body-and-music-4th-mar-purgatory-new-york-tickets",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Experimental performance art at Purgatory. Layer assigned: liveMusic.",
+      "layer": "liveMusic",
+      "tags": [
+        "performance art",
+        "experimental",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-04T19:00",
+      "end": "2026-03-04T21:30",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://dice.fm/event/avp97q-the-body-and-music-4th-mar-purgatory-new-york-tickets"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_revision_drag_20260304_bushwick",
+      "title": "RE[VISION] Open Stage Drag at Purgatory",
+      "type": "performances",
+      "summary": "Weekly open stage drag performance at Purgatory.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Queer-owned venue Purgatory. Layer assigned: nightlifeLayer.",
+      "layer": "nightlifeLayer",
+      "tags": [
+        "drag",
+        "queer",
+        "performance",
+        "purgatory",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-03-04T22:00",
+      "end": "2026-03-05T01:00",
+      "rrule": "FREQ=WEEKLY;BYDAY=WE",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://donyc.com/venues/purgatory"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_purgatory_crate_theadoore_20260305_bushwick",
+      "title": "Crate, Theadoore, and Fasting at Purgatory",
+      "type": "performances",
+      "summary": "Indie and alternative rock show at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://concerts50.com/show/crate-in-brooklyn-tickets-mar-05-2026",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Live music concert at Purgatory. Layer assigned: liveMusic.",
+      "layer": "liveMusic",
+      "tags": [
+        "live music",
+        "indie rock",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-05T20:00",
+      "end": "2026-03-05T23:30",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://concerts50.com/show/crate-in-brooklyn-tickets-mar-05-2026"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_sadie_gust_20260306_bushwick",
+      "title": "Sadie Gust, Caroline Quinn, and Scarlet Fiorella at Purgatory",
+      "type": "performances",
+      "summary": "Live performance featuring Sadie Gust and guests at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Live music at Purgatory. Layer assigned: liveMusic.",
+      "layer": "liveMusic",
+      "tags": [
+        "live music",
+        "female artists",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-06T19:00",
+      "end": "2026-03-06T22:30",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://dice.fm/venue/purgatory-kmwp"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_transmit_20260306_bushwick",
+      "title": "TRANSMIT at Purgatory",
+      "type": "parties",
+      "summary": "Late night dance party and electronic music event at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Electronic/Dance at Purgatory. Layer assigned: nightlifeLayer.",
+      "layer": "nightlifeLayer",
+      "tags": [
+        "dance party",
+        "electronic",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-06T23:00",
+      "end": "2026-03-07T04:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://dice.fm/venue/purgatory-kmwp"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_retail_drugs_20260307_bushwick",
+      "title": "Retail Drugs, Boyscoutmarie, Main Era, and Germ Patrol at Purgatory",
+      "type": "performances",
+      "summary": "High-energy indie rock and garage rock showcase at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://concerts50.com/show/main-era-in-brooklyn-tickets-mar-07-2026",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Live music concert at Purgatory. Layer assigned: liveMusic.",
+      "layer": "liveMusic",
+      "tags": [
+        "live music",
+        "indie",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-07T19:00",
+      "end": "2026-03-07T23:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://concerts50.com/show/main-era-in-brooklyn-tickets-mar-07-2026"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_purgatory_apartmentville_20260308_bushwick",
+      "title": "Apartmentville: A Homemade Variety Show at Purgatory",
+      "type": "performances",
+      "summary": "A quirky variety show featuring comedy and music at Purgatory.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://dice.fm/venue/purgatory-kmwp",
+      "haveTickets": false,
+      "address": "675 Central Ave, Brooklyn, NY 11207",
+      "neighborhood": "Bushwick",
+      "notes": "Variety show at Purgatory. Layer assigned: nightlifeLayer.",
+      "layer": "nightlifeLayer",
+      "tags": [
+        "variety show",
+        "comedy",
+        "performance art",
+        "purgatory"
+      ],
+      "currency": "USD",
+      "start": "2026-03-08T20:00",
+      "end": "2026-03-08T23:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://donyc.com/venues/purgatory"
+        ],
+        "retrievedAt": "2026-03-06T22:30:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260328_east_village",
+      "title": "JAPAN Fes New York @Astor Place",
+      "type": "other",
+      "summary": "The world's largest Japanese food festival featuring 2,000+ vendors throughout the season.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "Astor Place",
+      "neighborhood": "East Village",
+      "notes": "Street food festival featuring Takoyaki, Okonomiyaki, and Ramen. Event is free to enter, pay-as-you-go for food. Usually includes vegetarian and vegan options like Tanghulu and veggie bao.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "street fair",
+        "outdoor event",
+        "east village"
+      ],
+      "currency": "USD",
+      "start": "2026-03-28T10:00:00",
+      "end": "2026-03-28T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260329_midtown_west",
+      "title": "JAPAN Fes New York @Midtown West",
+      "type": "other",
+      "summary": "Authentic Japanese street food festival near Bryant Park.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "40th St (5th-6th Ave)",
+      "neighborhood": "Midtown West",
+      "notes": "Located near Bryant Park. Featured items often include Matcha sweets, Yakisoba, and Karaage. Posted on japanfes.com.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "midtown west",
+        "bryant park"
+      ],
+      "currency": "USD",
+      "start": "2026-03-29T10:00:00",
+      "end": "2026-03-29T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260404_the_village",
+      "title": "JAPAN Fes New York @The Village",
+      "type": "other",
+      "summary": "Japanese food festival featuring local and international vendors.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "Broadway (8th - 9th St)",
+      "neighborhood": "Greenwich Village",
+      "notes": "Expected vendors: Yaya Tea (Onigiri), Smoove Ice Cream (Matcha). Includes performance art and cultural pop-ups.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "greenwich village",
+        "the village"
+      ],
+      "currency": "USD",
+      "start": "2026-04-04T10:00:00",
+      "end": "2026-04-04T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260405_upper_west_side",
+      "title": "JAPAN Fes New York @Upper West Side",
+      "type": "other",
+      "summary": "Large scale Japanese culinary community event on the UWS.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "Broadway (103rd - 104th St)",
+      "neighborhood": "Upper West Side",
+      "notes": "Features 'Wa' (harmony) themed Japanese culture. Diverse food options from street sliders to traditional Gyoza.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "upper west side",
+        "uws"
+      ],
+      "currency": "USD",
+      "start": "2026-04-05T10:00:00",
+      "end": "2026-04-05T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260411_east_village",
+      "title": "JAPAN Fes New York @East Village",
+      "type": "other",
+      "summary": "Weekend 1 of back-to-back East Village Fes events.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "2nd Ave (10th - 11th St)",
+      "neighborhood": "East Village",
+      "notes": "Outdoor celebration of Japanese cuisine. Popular items: Mochi waffles, Salmon Sashimi bowls.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "east village",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-11T10:00:00",
+      "end": "2026-04-11T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260412_east_village",
+      "title": "JAPAN Fes New York @East Village",
+      "type": "other",
+      "summary": "Sunday session of the East Village Japanese food festival.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "Astor Place",
+      "neighborhood": "East Village",
+      "notes": "Authentic flavors, real connection. Free entry, diverse vendors including international favorites.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "east village",
+        "astor place",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-12T10:00:00",
+      "end": "2026-04-12T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260418_morningside_heights",
+      "title": "JAPAN Fes New York @Morningside Heights",
+      "type": "other",
+      "summary": "Upper Manhattan edition of the Japanese food festival.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "Broadway & 116th St area",
+      "neighborhood": "Morningside Heights",
+      "notes": "Street fair environment. Highlights: Japanese Teriyaki, Curry, and Daifuku Mochi.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "morningside heights"
+      ],
+      "currency": "USD",
+      "start": "2026-04-18T10:00:00",
+      "end": "2026-04-18T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260419_chelsea",
+      "title": "JAPAN Fes New York @Chelsea",
+      "type": "other",
+      "summary": "Japanese cultural festival taking place in Chelsea.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "6th Ave (23rd - 24th St)",
+      "neighborhood": "Chelsea",
+      "notes": "Chelsea location event. Vendors often include Bake Me Luck (Mochi Waffles) and various ramen stalls.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "chelsea",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-19T10:00:00",
+      "end": "2026-04-19T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japan_fes_new_york_20260425_chelsea",
+      "title": "JAPAN Fes New York @Chelsea",
+      "type": "other",
+      "summary": "Saturday edition of JAPAN Fes in Chelsea.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/newyork",
+      "haveTickets": false,
+      "address": "8th Ave (16th - 17th St)",
+      "neighborhood": "Chelsea",
+      "notes": "Second Chelsea date in April. Focus on Japanese-International fusion food and traditional crafts.",
+      "layer": "japanFes2026",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "chelsea",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-25T10:00:00",
+      "end": "2026-04-25T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:45:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260328_eastvillage",
+      "title": "JAPAN Fes New York @Astor Place",
+      "type": "other",
+      "summary": "The world's largest Japanese food festival featuring over 1,000 vendors throughout the season.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "Astor Place, New York, NY",
+      "neighborhood": "East Village",
+      "notes": "Features authentic Japanese cuisine: Takoyaki, Okonomiyaki, Karaage, and Ramen. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "japanese food",
+        "street food",
+        "outdoor festival"
+      ],
+      "currency": "USD",
+      "start": "2026-03-28T10:00:00",
+      "end": "2026-03-28T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260329_midtownwest",
+      "title": "JAPAN Fes New York @Midtown West",
+      "type": "other",
+      "summary": "Japanese food and culture festival located near Bryant Park.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "40th St (5th-6th Ave), New York, NY",
+      "neighborhood": "Midtown West",
+      "notes": "Outdoor festival with various Japanese street food vendors. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "bryant park",
+        "japanese food"
+      ],
+      "currency": "USD",
+      "start": "2026-03-29T10:00:00",
+      "end": "2026-03-29T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260404_thevillage",
+      "title": "JAPAN Fes New York @The Village",
+      "type": "other",
+      "summary": "Cultural festival featuring Japanese soul food and artisan crafts.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "Broadway (8th - 9th St), New York, NY",
+      "neighborhood": "Greenwich Village",
+      "notes": "Popular dishes include Yakisoba and Matcha sweets. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "the village",
+        "japanese culture"
+      ],
+      "currency": "USD",
+      "start": "2026-04-04T10:00:00",
+      "end": "2026-04-04T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260405_upperwestside",
+      "title": "JAPAN Fes New York @Upper West Side",
+      "type": "other",
+      "summary": "Large scale Japanese street food event on Broadway.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "Broadway (103rd - 104th St), New York, NY",
+      "neighborhood": "Upper West Side",
+      "notes": "Wide variety of vendors from Japan and NYC. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "upper west side",
+        "uws"
+      ],
+      "currency": "USD",
+      "start": "2026-04-05T10:00:00",
+      "end": "2026-04-05T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260411_eastvillage",
+      "title": "JAPAN Fes New York @East Village",
+      "type": "other",
+      "summary": "Japanese food festival featuring local favorite vendors.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "2nd Ave (10th - 11th St), New York, NY",
+      "neighborhood": "East Village",
+      "notes": "Ethnic Japanese street food, vegan options often available from specific vendors. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "east village",
+        "food festival",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-11T10:00:00",
+      "end": "2026-04-11T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260412_eastvillage",
+      "title": "JAPAN Fes New York @East Village",
+      "type": "other",
+      "summary": "Return to Astor Place for a Sunday edition of the Japanese food fest.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "Astor Place, New York, NY",
+      "neighborhood": "East Village",
+      "notes": "Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "astor place",
+        "sunday nyc",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-12T10:00:00",
+      "end": "2026-04-12T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260418_morningsideheights",
+      "title": "JAPAN Fes New York @Morningside Heights",
+      "type": "other",
+      "summary": "Cultural food event in the Morningside Heights neighborhood.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "Morningside Heights, New York, NY",
+      "neighborhood": "Morningside Heights",
+      "notes": "Focus on Japanese-International fusion vendors. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "morningside heights",
+        "uptown"
+      ],
+      "currency": "USD",
+      "start": "2026-04-18T10:00:00",
+      "end": "2026-04-18T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260419_chelsea",
+      "title": "JAPAN Fes New York @Chelsea",
+      "type": "other",
+      "summary": "Japanese food festival taking place in Chelsea.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "6th Ave (23rd-24th St), New York, NY",
+      "neighborhood": "Chelsea",
+      "notes": "Located in Chelsea. Features Mochi Waffles and Matcha Ice Cream. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "chelsea",
+        "food fest",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-19T10:00:00",
+      "end": "2026-04-19T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_japanfes_20260425_chelsea",
+      "title": "JAPAN Fes New York @Chelsea",
+      "type": "other",
+      "summary": "Second Chelsea date for the Japanese cultural festival.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.japanfes.com/",
+      "haveTickets": false,
+      "address": "8th Ave (16th-17th St), New York, NY",
+      "neighborhood": "Chelsea",
+      "notes": "Located in Chelsea. Known for Onigiri and Teriyaki skewers. Applied mapping: other -> default layer.",
+      "layer": "",
+      "tags": [
+        "japan fes",
+        "japan fest",
+        "chelsea",
+        "japanese food",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-04-25T10:00:00",
+      "end": "2026-04-25T18:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.japanfes.com/newyork/2026"
+        ],
+        "retrievedAt": "2026-03-11T07:15:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_public_craft_night_20260312_boerum_hill",
+      "title": "Public Craft Night @ NYC Resistor (My RSVP)",
+      "type": "other",
+      "summary": "Confirmed attendance for the Thursday night craft session at NYC Resistor.",
+      "priceTier": "free",
+      "starred": true,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.eventbrite.com/o/nyc-resistor-12710185",
+      "haveTickets": true,
+      "address": "87 3rd Ave, 4th Floor, Brooklyn, NY 11217",
+      "neighborhood": "Boerum Hill",
+      "notes": "Order #14422575253 confirmed for 1 ticket. This is the specific Thursday session. Venue is 18+ and masks are optional. Mapping: Assigned to 'personalMeetups' layer.",
+      "layer": "personalMeetups",
+      "tags": [
+        "makerspace",
+        "crafting",
+        "DIY",
+        "Brooklyn",
+        "Eventbrite",
+        "RSVP"
+      ],
+      "currency": "USD",
+      "start": "2026-03-12T18:30:00",
+      "end": "2026-03-12T21:30:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.eventbrite.com/e/public-craft-night-mondays-and-thursdays-tickets-1761937816439"
+        ],
+        "retrievedAt": "2026-03-09T16:15:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_secret_riso_club_flash_printing_20260120_bushwick",
+      "title": "Secret Riso Club Flash Printing Hours",
+      "type": "other",
+      "summary": "Updated flash printing hours for walk-ins and appointments at this community-focused bookstore and creative studio.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://linktr.ee/secretrisoclub",
+      "haveTickets": false,
+      "address": "122 Central Ave, Brooklyn, NY 11221",
+      "neighborhood": "Bushwick",
+      "notes": "Flash printing is a great way to check out the Riso process. Walk-ins welcome. Applied mapping: 'other' -> default layer.",
+      "tags": [
+        "riso",
+        "printing",
+        "art",
+        "bookstore",
+        "publishing",
+        "design",
+        "creative studio",
+        "instagram"
+      ],
+      "currency": "USD",
+      "dateRange": {
+        "start": "2026-01-20",
+        "end": "2026-12-31"
+      },
+      "openHours": [
+        {
+          "dow": [
+            3
+          ],
+          "start": "12:00",
+          "end": "19:00",
+          "label": "Flash Printing"
+        },
+        {
+          "dow": [
+            0
+          ],
+          "start": "12:00",
+          "end": "18:00",
+          "label": "Flash Printing"
+        }
+      ],
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.instagram.com/secret_riso_club/"
+        ],
+        "retrievedAt": "2026-03-06T23:07:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false,
+      "layer": ""
+    },
+    {
+      "id": "av_magic_after_hours_tannens_2026_herald_square",
+      "title": "Magic After Hours at Tannen's Magic",
+      "type": "performances",
+      "summary": "An intimate, 70-minute immersive magic show hosted by Noah Levine. Held inside the historic Tannen’s Magic Shop after dark, guests sit around a circular table for storytelling and world-class sleight of hand.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.tannens.com/pages/magic-after-hours",
+      "haveTickets": false,
+      "address": "45 W 34th St, Suite 608, New York, NY 10001",
+      "neighborhood": "Herald Square",
+      "notes": "Must be 16+ to attend. Performance starts promptly at 8:00 PM; late entry is typically not permitted. Keywords: immersive, close-up magic, historical, storytelling, hidden gem, performance art.",
+      "layer": "default",
+      "tags": [
+        "magic",
+        "performance art",
+        "immersive",
+        "nightlife",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-03-06T20:00",
+      "end": "2026-03-06T21:10",
+      "rrule": "FREQ=WEEKLY;BYDAY=TH,FR",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.tannens.com/pages/magic-after-hours",
+          "https://www.theatermania.com/shows/new-york-theater/magic-after-hours_1785619/"
+        ],
+        "retrievedAt": "2026-03-06T22:38:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_the_naked_comedy_show_20260312_bushwick",
+      "title": "The Naked Comedy Show at Secret Bushwick Venue",
+      "type": "performances",
+      "summary": "A monthly stand-up showcase in Bushwick featuring professional comedians performing completely nude. Host Billy Procida brings a lineup of comics seen on Netflix, HBO, and Comedy Central.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.eventbrite.com/e/the-naked-comedy-show-best-stand-up-comedy-in-bushwick-without-pants-tickets-1918303500409",
+      "haveTickets": false,
+      "address": "Secret Location (sent via email)",
+      "neighborhood": "Bushwick",
+      "notes": "BYOB (21+ only). First two rows of seating are clothing-optional for the audience. The specific address is sent via confirmation email only. Use 'performances' mapping to default layer.",
+      "layer": "performances",
+      "tags": [
+        "performance art",
+        "stand-up",
+        "comedy",
+        "naked comedy",
+        "BYOB",
+        "sex-positive",
+        "adults only",
+        "Billy Procida",
+        "Bushwick"
+      ],
+      "currency": "USD",
+      "start": "2026-03-12T19:00:00",
+      "end": "2026-03-12T20:30:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.eventbrite.com/e/the-naked-comedy-show-best-stand-up-comedy-in-bushwick-without-pants-tickets-1918303500409",
+          "https://www.timeout.com/newyork/comedy/naked-comedy-show",
+          "https://heyplura.com/events/the-naked-comedy-show-best-stand-up-comedy-in-bus-56"
+        ],
+        "retrievedAt": "2026-03-06T22:34:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_hot_topic_nyc_queer_party_20260314_bushwick",
+      "title": "Hot Topic - NYC @ BOYFRIEND co-op café + bar",
+      "type": "parties",
+      "summary": "A Hot Topic themed queer party in Brooklyn featuring DJs Mangumami and Baejing.",
+      "priceTier": "low",
+      "starred": false,
+      "ticketsRequired": true,
+      "ticketsLink": "https://www.sapphiccollective.com",
+      "haveTickets": false,
+      "address": "1157 Myrtle Ave, Brooklyn, NY 11206, USA",
+      "neighborhood": "Bushwick",
+      "notes": "A Hot Topic Themed Queer Party. Featuring DJs Mangumami & Baejing. Posted on Instagram by Sapphic Collective. Venue is a co-op café and bar. Keywords: Emo, Pop-punk, Queer, Sapphic, Nightlife, Brooklyn, Performance Art, Themed Bar.",
+      "layer": "nightlife",
+      "tags": [
+        "queer",
+        "sapphic",
+        "emo",
+        "nightlife",
+        "brooklyn",
+        "themed"
+      ],
+      "currency": "USD",
+      "start": "2026-03-14T22:00:00",
+      "end": "2026-03-15T02:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.sapphiccollective.com"
+        ],
+        "retrievedAt": "2026-03-06T22:23:00Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_ippudo-v-brooklyn_unscheduled_dumbo",
+      "title": "Ippudo V Brooklyn",
+      "type": "lunch/dinner",
+      "summary": "A fully plant-based concept from the global ramen icon Ippudo, reimagining Japanese soul food through a vegan lens.",
+      "priceTier": "medium",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "117 Adams St, Brooklyn, NY 11201",
+      "neighborhood": "Dumbo",
+      "notes": "Fully vegan menu featuring plant-based 'Tonkotsu' (Pla-Ton), Shoyu, and Miso ramen. Also serves vegan gyoza, sushi rolls, and signature vegetable buns. Modern, airy interior with a gift shop. Noted from TikTok @elizabethisvegan.",
+      "layer": "veganOptions",
+      "tags": [
+        "vegan",
+        "japanese",
+        "ramen",
+        "plant-based",
+        "dumbo",
+        "tiktok-discovery"
+      ],
+      "currency": "USD",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.ippudous.com/ippudov-db"
+        ],
+        "retrievedAt": "2026-03-06T22:17:15Z"
+      },
+      "exdate": [],
+      "isFree": false,
+      "committed": false,
+      "done": false
+    },
+    {
+      "id": "av_queer-backgammon-at-boyfriend-co-op_20260315_bushwick",
+      "title": "Queer Backgammon at Boyfriend Co-op",
+      "type": "other",
+      "summary": "A recurring community backgammon afternoon at Boyfriend Co-op, featuring Turkish Psychedelic Rock. Open to all skill levels with lessons provided for beginners.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "1157 Myrtle Ave, Brooklyn, NY 11206",
+      "neighborhood": "Bushwick",
+      "notes": "Instructional: 'Don't know how to play?? We will teach you!'. Equipment: 'Bring your backgammon set. If not, we have some!!'. Music: Turkish Psychedelic Rock. Venue is a queer/lesbian worker-owned cooperative café and bar. Posted on Instagram @boyfriendcoop.",
+      "layer": "personalMeetups",
+      "tags": [
+        "queer",
+        "lesbian",
+        "backgammon",
+        "board games",
+        "turkish psychedelic rock",
+        "community",
+        "worker-owned",
+        "bushwick",
+        "sunday funday",
+        "dice"
+      ],
+      "currency": "USD",
+      "start": "2026-03-15T13:00",
+      "end": "2026-03-15T16:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.instagram.com/boyfriendcoop/",
+          "https://gomag.com/venue/boyfriend-co-op/",
+          "https://www.timeout.com/newyork/news/bushwicks-boyfriend-is-the-new-day-to-night-queer-space-we-desperately-needed-031025"
+        ],
+        "retrievedAt": "2026-03-06T22:15:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_hers-a-celebration-of-women-creativity_20260306_murray-hill",
+      "title": "HERS | A Celebration of Women Creativity",
+      "type": "museums/galleries",
+      "summary": "Exhibition opening and art talk featuring ten women artists spanning painting, sculpture, and photography. Part of the 3rd Annual Women's Show.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "https://www.eventbrite.com/e/hers-a-celebration-of-women-creativity-tickets-1982836349899",
+      "haveTickets": false,
+      "address": "200 E 38th St, New York, NY 10016, USA",
+      "neighborhood": "Murray Hill",
+      "notes": "Opening reception includes an Art Talk from 7:00 PM – 8:00 PM. The group exhibition foregrounds a multiplicity of female voices and plurality in contemporary art. Featured artists include Colleen Barry, Ioana Aron, Ioana Gorzo, Jaimee Todd, Ji Zou, Luana Seu, Miriam Bloom, Ramathillai C, Rita Salt, and Rossana Romero. Auto-assigned layer based on type: museums/galleries -> museumLayer.",
+      "layer": "museumLayer",
+      "tags": [
+        "romanian culture",
+        "contemporary art",
+        "women artists",
+        "painting",
+        "sculpture",
+        "photography",
+        "art talk",
+        "exhibition opening"
+      ],
+      "currency": "USD",
+      "start": "2026-03-06T18:00",
+      "end": "2026-03-06T21:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.rciusa.info/events-1",
+          "https://www.eventbrite.com/e/hers-a-celebration-of-women-creativity-tickets-1982836349899"
+        ],
+        "retrievedAt": "2026-03-02T23:19:45Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_hers-exhibition-run_20260306_murray-hill",
+      "title": "HERS | Exhibition Run",
+      "type": "museums/galleries",
+      "summary": "Full exhibition run of 'HERS', a group show celebrating female creativity and diverse artistic approaches.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "200 E 38th St, New York, NY 10016, USA",
+      "neighborhood": "Murray Hill",
+      "notes": "The exhibition runs from March 6 through April 10, 2026. Featured artists explore themes of womanhood, fairy tales, and psychological storytelling. Auto-assigned layer based on type: museums/galleries -> museumLayer.",
+      "layer": "museumLayer",
+      "tags": [
+        "romanian culture",
+        "contemporary art",
+        "women artists",
+        "visual arts"
+      ],
+      "currency": "USD",
+      "dateRange": {
+        "start": "2026-03-06",
+        "end": "2026-04-10"
+      },
+      "openHours": [
+        {
+          "dow": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "start": "10:00",
+          "end": "17:00",
+          "label": "Gallery Hours"
+        }
+      ],
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.eventbrite.com/e/hers-a-celebration-of-women-creativity-tickets-1982836349899"
+        ],
+        "retrievedAt": "2026-03-02T23:19:45Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_danielle_rowe_closing_reception_20260312_studio1609_gallery",
+      "title": "Closing Reception: Danielle Rowe at Studio 1609 Gallery",
+      "type": "museums/galleries",
+      "summary": "Final chance to view Jamaican-American artist Danielle Rowe's vibrant, elemental paintings exploring Black global experience and ecological presence.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "1609 DeKalb Ave, Brooklyn, NY 11237",
+      "neighborhood": "Bushwick",
+      "notes": "Closing reception for the exhibition. Artist Danielle Rowe (danielle_rowe.art) explores themes of identity, ancestral memory, and nature using acrylics and natural materials. Auto-assigned to museumLayer.",
+      "layer": "museumLayer",
+      "tags": [
+        "art exhibition",
+        "Jamaican-American artist",
+        "Black art",
+        "Bushwick",
+        "gallery opening",
+        "painting"
+      ],
+      "currency": "USD",
+      "start": "2026-03-12T19:00:00",
+      "end": "2026-03-12T21:00:00",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.instagram.com/daniellerowe.art/",
+          "https://www.peerspace.com/pages/listings/68fbb7d83f94028711a51f5d"
+        ],
+        "retrievedAt": "2026-03-11T15:20:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
+    },
+    {
+      "id": "av_gladiators-nyc-central-park-battle_20260314_central-park",
+      "title": "Gladiators NYC: Armored Combat in Central Park",
+      "type": "performances",
+      "summary": "Watch full-contact medieval armored combat featuring knights in steel armor dueling with swords and axes on the lawns of Central Park.",
+      "priceTier": "free",
+      "starred": false,
+      "ticketsRequired": false,
+      "ticketsLink": "",
+      "haveTickets": false,
+      "address": "Central Park West & W 79th St",
+      "neighborhood": "Upper West Side",
+      "notes": "Attendees are encouraged to bring picnic blankets and snacks. The group typically meets near the Great Lawn or Sheep Meadow areas; check Instagram @gladiatorsnyc for the exact patch of grass. This is a recurring monthly event usually held on the second Saturday.",
+      "layer": "familyFriendly",
+      "tags": [
+        "medieval",
+        "armored combat",
+        "HEMA",
+        "knights",
+        "live action",
+        "community event",
+        "outdoor",
+        "performance art",
+        "instagram",
+        "recurring"
+      ],
+      "currency": "USD",
+      "start": "2026-03-14T14:00",
+      "end": "2026-03-14T16:00",
+      "rrule": "FREQ=MONTHLY;BYDAY=2SA",
+      "source": {
+        "kind": "web",
+        "urls": [
+          "https://www.gladiators.nyc/",
+          "https://www.instagram.com/gladiatorsnyc",
+          "https://www.meetup.com/gladiators-nyc-armored-combat-fighting/"
+        ],
+        "retrievedAt": "2026-03-12T14:55:00Z"
+      },
+      "exdate": [],
+      "isFree": true,
+      "committed": false,
+      "done": false,
+      "cost": 0
     }
-
-    
   ]
 };
-;
